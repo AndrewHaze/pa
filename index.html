@@ -342,7 +342,7 @@
                                     case "f":
                                     case "g":
                                         m.strength--;
-                                        score(1);
+                                        scoreUp(1);
                                         document.getElementById('score').innerHTML = score;
                                         if (m.strength === 0) {
                                             m.color.style = "transparent";
@@ -359,7 +359,7 @@
                                         break;
                                     case "i":
                                         stage.removeChild(m);
-                                        score(1);
+                                        scoreUp(1);
                                         mCount--;
                                         m.touching = true;
                                         disruption();
@@ -465,7 +465,7 @@
                                             inTeleport = false;
                                             if (o.bonus !== "shield") {
                                                 m.strength--;
-                                                score(1);
+                                                scoreUp(1);
                                                 document.getElementById('score').innerHTML = score;
                                                 if (m.strength === 0) {
                                                     m.color.style = "transparent";
@@ -487,7 +487,7 @@
                                         case "i":
                                             inTeleport = false;
                                             stage.removeChild(m);
-                                            score(1);
+                                            scoreUp(1);
                                             mCount--;
                                             disruption();
                                             brickCollision = -1;
@@ -504,7 +504,7 @@
                                 } else {
                                     if (m.type !== "j") {
                                         if (m.type !== "h") {
-                                            score(1);
+                                            scoreUp(1);
                                             mCount--;
                                         }
                                         m.type = "b"; //разбиваемый
@@ -683,7 +683,7 @@
                                         p.vY = -p.vY;
                                         p.vX = -p.vX;
                                     }
-                                    score(2);
+                                    scoreUp(2);
                                     document.getElementById('score').innerHTML = score;
                                 }
 
@@ -727,31 +727,31 @@
                                 o.gift = bonusList[randomInteger(13, 20)];
                             switch (o.gift) {
                                 case "live":
-                                    score(1);
+                                    scoreUp(1);
                                     platformSetBonus("live");
                                     break
                                 case "slow":
-                                    score(1);
+                                    scoreUp(1);
                                     ballSetBonus(0, "slow");
                                     break;
                                 case "magnet":
-                                    score(1);
+                                    scoreUp(1);
                                     platformSetBonus("magnet");
                                     break;
                                 case "ack":
-                                    score(1);
+                                    scoreUp(1);
                                     platformSetBonus("ack");
                                     break;
                                 case "enlarge":
-                                    score(1);
+                                    scoreUp(1);
                                     platformSetBonus("enlarge");
                                     break;
                                 case "ram":
-                                    score(1);
+                                    scoreUp(1);
                                     ballSetBonus(Balls[0], "ram");
                                     break;
                                 case "absent":
-                                    score(1);
+                                    scoreUp(1);
                                     maxPestCount = 0;
                                     absent = 1000 * bFactor;
                                     for (pst in Pests) {
@@ -762,7 +762,7 @@
                                     pestCount = 0;
                                     break;
                                 case "triple":
-                                    score(1);
+                                    scoreUp(1);
                                     ballSetBonus(Balls[Balls.length - 1], "triple");
                                     break;
                                 case "next":
@@ -770,40 +770,40 @@
                                     startLevel(currentLevel);
                                     break;
                                 case "floor":
-                                    score(1);
+                                    scoreUp(1);
                                     floor = 1000 * bFactor;
                                     document.getElementById('gameCanvas').style.borderBottomColor = "#464e58";
                                     break;
                                 case "death":
-                                    score(100);
+                                    scoreUp(100);
                                     platformSetBonus("death");
                                     break
                                 case "anew":
-                                    score(1);
+                                    scoreUp(1);
                                     startLevel(currentLevel);
                                     break;
                                 case "quick":
-                                    score(10);
+                                    scoreUp(10);
                                     ballSetBonus(0, "quick");
                                     break;
                                 case "pest":
-                                    score(2);
+                                    scoreUp(2);
                                     ballSetBonus(0, "pest");
                                     break;
                                 case "nobonus":
-                                    score(2);
+                                    scoreUp(2);
                                     ballSetBonus(0, "nobonus");
                                     break;
                                 case "shield":
-                                    score(10);
+                                    scoreUp(10);
                                     ballSetBonus(0, "shield");
                                     break;
                                 case "reduce":
-                                    score(10);
+                                    scoreUp(10);
                                     platformSetBonus("reduce");
                                     break;
                                 case "invisibility":
-                                    score(50);
+                                    scoreUp(50);
                                     ballSetBonus(0, "invisibility");
                                     break;
                             }
@@ -896,10 +896,10 @@
                 stage.update(event);
             }
 
-            function score(n) {
+            function scoreUp(n) {
                 score += n;
                 if (score % 500 === 0) {
-                    //lives++;
+                    lives++;
                 }
             }
 
@@ -1085,7 +1085,7 @@
                             case "e":
                             case "f":
                             case "g":
-                                score(1);
+                                scoreUp(1);
                                 mCount--;
                                 m.strength = 0;
                                 m.color.style = "transparent";
@@ -1100,7 +1100,7 @@
                                 break;
                             case "i":
                                 stage.removeChild(m);
-                                score(1);
+                                scoreUp(1);
                                 mCount--;
                                 m.touching = true;
                                 disruption();
