@@ -670,16 +670,9 @@
                                     //createjs.Sound.play("break", {interrupt: createjs.Sound.INTERUPT_LATE, offset: 0.8});
 
                                     //ускоряем шарик
-                                    if (p.vX > 0 && p.vX < 10) {
-                                        p.vX += 0.1;
-                                    } else if (p.vX > -10) {
-                                        p.vX -= 0.1;
-                                    }
-                                    if (p.vY > 0 && p.vY < 10) {
-                                        p.vY += 0.1;
-                                    } else if (p.vY > -10) {
-                                        p.vY -= 0.1;
-                                    }
+                                    p.vX *= 1.1;
+                                    p.vY *= 1.1;
+                                    
                                     if (p.bonus != "ram") {
                                         p.vY = -p.vY;
                                         p.vX = -p.vX;
