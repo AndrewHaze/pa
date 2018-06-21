@@ -146,7 +146,6 @@
             var blastWaves;
 
             var Teleports;
-            var inTeleport = false;
 
             var Bonuses;
             var bFactor = 1; //коэффициент увеличения времени действия бонусов
@@ -174,7 +173,7 @@
             var currentLevel;
             var lives; //количество "жизней"
             var score; //текущий счет
-            var scoreThreshold; 
+            var scoreThreshold;
 
             var Platform; //Платформа (platformObject)
             var pBonusColor = [];
@@ -410,6 +409,7 @@
                                 o.x = o.radius + 1;
                                 o.y = oldY;
                                 o.vX = -o.vX;
+                                o.inTeleport = false;
                                 continue;
                             }
 
@@ -417,6 +417,7 @@
                                 o.x = stage.canvas.width - o.radius - 1;
                                 o.y = oldY;
                                 o.vX = -o.vX;
+                                o.inTeleport = false;
                                 continue;
                             }
 
@@ -424,6 +425,7 @@
                                 o.x = oldX;
                                 o.y = o.radius + 1;
                                 o.vY = -o.vY;
+                                o.inTeleport = false;
                                 continue;
                             }
 
@@ -438,7 +440,7 @@
                                     continue;
                                 }
                                 if (isCircleToRect(o.x, o.y, o.radius, m.x, m.y, bW, bH)) {
-                                    if (m.type === "j" && inTeleport) {
+                                    if (m.type === "j" && o.inTeleport) {
                                         continue;
                                     }
                                     m.touching = true;
@@ -463,7 +465,7 @@
                                         case "e":
                                         case "f":
                                         case "g":
-                                            inTeleport = false;
+                                            o.inTeleport = false;
                                             if (o.bonus !== "shield") {
                                                 m.strength--;
                                                 scoreUp(1);
@@ -481,12 +483,12 @@
                                             }
                                             break;
                                         case "h":
-                                            inTeleport = false;
+                                            o.inTeleport = false;
                                             m.color.style = "#f2f2fc";
                                             bSkip = 2; //перекрасить и пропустить n-1 тик
                                             break;
                                         case "i":
-                                            inTeleport = false;
+                                            o.inTeleport = false;
                                             stage.removeChild(m);
                                             scoreUp(1);
                                             mCount--;
@@ -494,12 +496,16 @@
                                             brickCollision = -1;
                                             break;
                                         case "j":
-                                            inTeleport = true;
+                                            o.inTeleport = true;
                                             var n = teleportIn();
                                             if (n >= 0) {
                                                 brickCollision = 0;
                                                 o.x = Masonry[n].x + 25;
                                                 o.y = Masonry[n].y + 12;
+                                                if (Math.abs(o.vX) > Math.abs(o.vY))
+                                                    o.vY *= 1.1;
+                                                else
+                                                    o.vX *= 1.1;
                                             }
                                     }
                                 } else {
@@ -672,7 +678,7 @@
                                     //ускоряем шарик
                                     p.vX *= 1.1;
                                     p.vY *= 1.1;
-                                    
+
                                     if (p.bonus != "ram") {
                                         p.vY = -p.vY;
                                         p.vX = -p.vX;
@@ -1270,7 +1276,7 @@
                         if (t !== "a" && t !== "h" && t !== "j")
                             mCount++;
                         if (t === "j") {
-                            Teleports[j] = i;
+                            Teleports[j] = i; //массив с порядковыми номерами телепортов
                             j++;
                         }
                         strIndex += 3;
