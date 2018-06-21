@@ -211,11 +211,11 @@ function isCircleToRect(cx, cy, radius, rx, ry, width, height) {
 
 function ballSetBonus(ball, bonus) {
     var b;
-
+    var o;
     switch (bonus) {
         case "quick":
             for (b in Balls) {
-                var o = Balls[b];
+                o = Balls[b];
                 if (!o || !o.active) {
                     continue;
                     o.vX *= 1.5;
@@ -224,7 +224,7 @@ function ballSetBonus(ball, bonus) {
             }
             break;
         case "ram":
-            var o = Balls[0]
+            o = Balls[0]
             bColor = "red";
             o.bonus = "ram";
             o.color.style = bColor;
@@ -233,7 +233,7 @@ function ballSetBonus(ball, bonus) {
         case "invisibility":
             bColor = "#f3f4f5";
             for (b in Balls) {
-                var o = Balls[b];
+                o = Balls[b];
                 if (!o || !o.active) {
                     continue;
                 }
@@ -257,7 +257,7 @@ function ballSetBonus(ball, bonus) {
         case "pest":
             bColor = "#aad3eb";
             for (b in Balls) {
-                var o = Balls[b];
+                o = Balls[b];
                 if (!o || !o.active) {
                     continue;
                 }
@@ -269,7 +269,7 @@ function ballSetBonus(ball, bonus) {
         case "nobonus":
             bColor = "#bfbfbf";
             for (b in Balls) {
-                var o = Balls[b];
+                o = Balls[b];
                 if (!o || !o.active) {
                     continue;
                 }
@@ -280,7 +280,7 @@ function ballSetBonus(ball, bonus) {
             break;    
         case "slow":
             for (b in Balls) {
-                var o = Balls[b];
+                o = Balls[b];
                 if (!o || !o.active) {
                     continue;
                 }
@@ -299,7 +299,7 @@ function ballSetBonus(ball, bonus) {
             break;
         case "none":
         for (b in Balls) {
-            var o = Balls[b];
+            o = Balls[b];
             if (!o || !o.active) {
                 continue;
             }
