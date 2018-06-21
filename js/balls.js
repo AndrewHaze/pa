@@ -20,7 +20,7 @@
     p.active; //is it active
     p.launched;
     p.inTeleport;
-    p.ballPlatformOffset; //положение шара на платформе с учетом её ширины
+    p.ballPlatformOffset; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 
 // public methods:
@@ -54,7 +54,7 @@
         var r = this.radius / 2;
         if (type === "j") return;
         if (isCircleToRect(this.x, this.y, rr, tX, tY, tW, tH)) {
-            //если внутри — вынимаем
+            //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             var k, m, nx, ny;
             if (oldX !== this.x) {
                 m = (oldX * this.y - oldY * this.x) / (oldX - this.x);
@@ -86,16 +86,16 @@
             this.y = ny;
         }
 
-        //соударение, горизонтальное или вертикальное
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         xResult = this.x + r >= tX && this.x - r <= tX + tW;
         yResult = this.y + r >= tY && this.y - r <= tY + tH;
 
-        //угол?
+        //пїЅпїЅпїЅпїЅ?
         if (!xResult && !yResult) {
             xResult = yResult = true;
         }
 
-        //борьба с залипанием
+        //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (xResult && this.vY === 0) {
             if (this.x + r > tX + tW)
                 this.vY = -1;
@@ -114,7 +114,7 @@
         var r = this.radius / 2;
         var result = isCircleToRect(this.x, this.y, this.radius, tX, tY, tW, tH);
 
-        if (result) { //касание было?
+        if (result) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ?
 
             xResult = this.x + r >= tX && this.x - r <= tX + tW;
             yResult = this.y + r >= tY && this.y - r <= tY + tH;
@@ -218,8 +218,8 @@ function ballSetBonus(ball, bonus) {
                 var o = Balls[b];
                 if (!o || !o.active) {
                     continue;
-                    o.vX *= 1.4;
-                    o.vY *= 1.4;
+                    o.vX *= 1.5;
+                    o.vY *= 1.5;
                 }
             }
             break;
@@ -285,10 +285,10 @@ function ballSetBonus(ball, bonus) {
                     continue;
                 }
                 if (Math.abs(o.vX) >= 3) {
-                        o.vX /= 1.4;
+                        o.vX /= 1.5;
                 }
                 if (Math.abs(o.vX) >= 3) {
-                        o.vY /= 1.4;
+                        o.vY /= 1.5;
                 }
             }
             break;
