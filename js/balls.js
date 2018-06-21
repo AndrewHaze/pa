@@ -19,6 +19,7 @@
 
     p.active; //is it active
     p.launched;
+    p.inTeleport;
     p.ballPlatformOffset; //положение шара на платформе с учетом её ширины
 
 
@@ -177,6 +178,7 @@ function startBall(x, y, b) {
     o.bonus = "none";
     o.color.style = dColor;
     o.bonusTime = 0;
+    o.inTeleport = false;
     bCount++;
     if (o.launched) {
         var a = Math.random() * (Math.PI * 2);
