@@ -502,10 +502,9 @@
                                                 brickCollision = 0;
                                                 o.x = Masonry[n].x + 25;
                                                 o.y = Masonry[n].y + 12;
-                                                if (Math.abs(o.vX) > Math.abs(o.vY))
-                                                    o.vY *= 1.1;
-                                                else
-                                                    o.vX *= 1.1;
+                                                var angle = Math.random() * (Math.PI * 2);
+                                                o.vX = Math.sin(angle) * 5;
+                                                o.vY = Math.cos(angle) * 5;
                                             }
                                     }
                                 } else {
