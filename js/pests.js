@@ -67,8 +67,8 @@
 
         //pick a random direction to move in and base the rotation off of speed
         var angle = Math.random() * (Math.PI * 2);
-        this.velX = Math.sin(angle) * (4.33);
-        this.velY = Math.cos(angle) * (4.33);
+        this.velX = Math.sin(angle) * 4.33;
+        this.velY = Math.cos(angle) * 4.33;
         this.spin = (Math.random() + 0.2) * this.velX;
         this.active = true;
     };
@@ -181,5 +181,6 @@ function getPest(size) {
     }
 
     stage.addChild(Pests[i]);
+    stage.update();
     return i;
 }
