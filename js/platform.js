@@ -104,7 +104,7 @@ function platformSetBonus(bonus) {                                              
 function platformNoMove(m) {
     if (m) {
         px = Platform.x;
-        stage.on("stagemousemove", function (evt) {
+        stage.on("stagemousemove", function () {
             Platform.x = px;
         });
     } else {

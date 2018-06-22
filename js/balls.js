@@ -54,10 +54,11 @@
     p.ballBrickCollision = function (tX, tY, tW, tH, type) {
         var rr = this.radius;
         var r = this.radius / 2;
+        var k, m, nx, ny, ox;
         if (type === "j")
             return;
         if (isCircleToRect(this.x, this.y, rr, tX, tY, tW, tH)) {
-            var k, m, nx, ny;
+
             if (oldX !== this.x) {
                 m = (oldX * this.y - oldY * this.x) / (oldX - this.x);
             } else
@@ -65,9 +66,9 @@
             k = (oldY - m) / oldX;
             nx = this.x;
             ny = this.y;
-
             if (oldX >= nx) {
-                while (stage.canvas.width >= nx && ny < 270) {
+
+                while (canvas.width - this.radius >= nx) {
                     ny = k * nx + m;
                     if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
                         break;
@@ -75,7 +76,7 @@
                     nx++;
                 }
             } else {
-                while (0 <= nx && ny < 270) {
+                while (this.radius <= nx) {
                     ny = k * nx + m;
                     if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
                         break;
@@ -83,13 +84,12 @@
                     nx--;
                 }
             }
-            
-            if (ny > 270)
-                ny = 270;
-            
+            if (ny > 300)
+                ny = 300;
             this.x = nx;
             this.y = ny;
-        }
+            // createjs.Ticker.paused = true;
+        } ///
 
         xResult = this.x + r >= tX && this.x - r <= tX + tW;
         yResult = this.y + r >= tY && this.y - r <= tY + tH;
@@ -133,11 +133,11 @@
             if (this.x >= tX && this.x <= tX + this.radius * 2.5) {
                 this.vX = -3;
             }
-            
+
             if (this.x >= tX + tW - this.radius * 2.5 && this.x <= tX + tW) {
                 this.vX = 3;
             }
-            
+
             return result;
         }
     };
