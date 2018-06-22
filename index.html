@@ -541,14 +541,16 @@
 
                                 choice = Math.random() >= 0.5;
                                 if (choice)
-                                    o.vX += .1;
+                                    o.vX += .05;
                                 else
-                                    o.vX -= .1;
+                                    o.vX -= .05;
+                                
                                 choice = Math.random() >= 0.5;
                                 if (choice)
-                                    o.vY += .1;
+                                    o.vY += .05;
                                 else
-                                    o.vY -= .1;
+                                    o.vY -= .05;
+                                
                             } else if (brickCollision < 0) {
                                 o.vY = -o.vY * 1.2;
                                 o.vX = -o.vX * 1.2;
@@ -574,6 +576,7 @@
                                 if (bCount <= 0) {
                                     startLevelAnimation("p_born");
                                     lives--;
+                                    //createjs.Ticker.paused = true;
                                     document.getElementById('lives').innerHTML = lives;
                                 }
                                 //если есть сетка
@@ -1304,14 +1307,14 @@
                 platformSetBonus("none");
                 stage.addChild(Platform);
 
-                stage.on("stagemousedown", function (evt) {
+                stage.on("stagemousedown", function () {
                     for (b in Balls) {
                         var p = Balls[b];
                         p.launched = true;
                     }
                 });
                 stage.on("stagemousemove", function (evt) {
-                    Platform.x = evt.rawX;
+                    Platform.x = evt.rawX - Platform.width/2;
                     document.getElementById('mx').innerHTML = evt.rawX;
                     document.getElementById('my').innerHTML = ~~evt.rawY;
                 });
@@ -1381,7 +1384,7 @@
                 document.getElementById('lives').innerHTML = lives;
                 document.getElementById('score').innerHTML = score;
                 document.getElementById('dashboard').style.opacity = "1";
-                stage.mouseMoveOutside = true;
+                stage.mouseMoveOutside = false;
                 messageField.y = canvas.height / 2;
             }
         </script>
