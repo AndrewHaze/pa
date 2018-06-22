@@ -19,7 +19,7 @@
 
     p.active; //is it active
     p.launched;
-    
+
     p.inTeleport;
     p.ballPlatformOffset; //положение шара от л. края платформы
     p.wallBlows; //число ударов только о вер. стены
@@ -54,7 +54,8 @@
     p.ballBrickCollision = function (tX, tY, tW, tH, type) {
         var rr = this.radius;
         var r = this.radius / 2;
-        if (type === "j") return;
+        if (type === "j")
+            return;
         if (isCircleToRect(this.x, this.y, rr, tX, tY, tW, tH)) {
             var k, m, nx, ny;
             if (oldX !== this.x) {
@@ -66,7 +67,7 @@
             ny = this.y;
 
             if (oldX >= nx) {
-                while (stage.canvas.width >= nx) {
+                while (stage.canvas.width >= nx && ny < 270) {
                     ny = k * nx + m;
                     if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
                         break;
@@ -74,7 +75,7 @@
                     nx++;
                 }
             } else {
-                while (0 <= nx) {
+                while (0 <= nx && ny < 270) {
                     ny = k * nx + m;
                     if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
                         break;
@@ -82,7 +83,10 @@
                     nx--;
                 }
             }
-
+            
+            if (ny > 270)
+                ny = 270;
+            
             this.x = nx;
             this.y = ny;
         }
@@ -112,7 +116,7 @@
         var r = this.radius / 2;
         var result = isCircleToRect(this.x, this.y, this.radius, tX, tY, tW, tH);
 
-        if (result) { 
+        if (result) {
 
             xResult = this.x + r >= tX && this.x - r <= tX + tW;
             yResult = this.y + r >= tY && this.y - r <= tY + tH;
@@ -122,17 +126,18 @@
                 this.vY = -this.vY;
             }
 
-            if (yResult)
+            if (yResult) {
                 this.vX = -this.vX;
+            }
 
-            if (this.x >= tX - this.radius * 2 && this.x <= tX + this.radius * 2) {
+            if (this.x >= tX && this.x <= tX + this.radius * 2.5) {
                 this.vX = -3;
-
             }
-            if (this.x >= tX + tW - this.radius * 2 && this.x <= tX + tW + this.radius) {
+            
+            if (this.x >= tX + tW - this.radius * 2.5 && this.x <= tX + tW) {
                 this.vX = 3;
-
             }
+            
             return result;
         }
     };
@@ -240,7 +245,7 @@ function ballSetBonus(ball, bonus) {
                 o.color.style = bColor;
                 o.bonusTime = 1000 * bFactor;
             }
-            break;    
+            break;
         case "shield":
             bColor = "#a6e6a6";
             for (b in Balls) {
@@ -264,7 +269,7 @@ function ballSetBonus(ball, bonus) {
                 o.color.style = bColor;
                 o.bonusTime = 1000 * bFactor;
             }
-            break;    
+            break;
         case "nobonus":
             bColor = "#bfbfbf";
             for (b in Balls) {
@@ -276,7 +281,7 @@ function ballSetBonus(ball, bonus) {
                 o.color.style = bColor;
                 o.bonusTime = 1000 * bFactor;
             }
-            break;    
+            break;
         case "slow":
             for (b in Balls) {
                 o = Balls[b];
@@ -284,10 +289,10 @@ function ballSetBonus(ball, bonus) {
                     continue;
                 }
                 if (Math.abs(o.vX) >= 3) {
-                        o.vX /= 1.5;
+                    o.vX /= 1.5;
                 }
                 if (Math.abs(o.vX) >= 3) {
-                        o.vY /= 1.5;
+                    o.vY /= 1.5;
                 }
             }
             break;

@@ -109,7 +109,7 @@ function platformNoMove(m) {
         });
     } else {
         stage.on("stagemousemove", function (evt) {
-            Platform.x = evt.rawX;
+            Platform.x = evt.rawX - Platform.width/2;
         });
     }
 }
