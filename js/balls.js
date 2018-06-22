@@ -19,8 +19,10 @@
 
     p.active; //is it active
     p.launched;
+    
     p.inTeleport;
-    p.ballPlatformOffset; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    p.ballPlatformOffset; //положение шара от л. края платформы
+    p.wallBlows; //число ударов только о вер. стены
 
 
 // public methods:
@@ -54,7 +56,6 @@
         var r = this.radius / 2;
         if (type === "j") return;
         if (isCircleToRect(this.x, this.y, rr, tX, tY, tW, tH)) {
-            //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             var k, m, nx, ny;
             if (oldX !== this.x) {
                 m = (oldX * this.y - oldY * this.x) / (oldX - this.x);
@@ -86,16 +87,13 @@
             this.y = ny;
         }
 
-        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         xResult = this.x + r >= tX && this.x - r <= tX + tW;
         yResult = this.y + r >= tY && this.y - r <= tY + tH;
 
-        //пїЅпїЅпїЅпїЅ?
         if (!xResult && !yResult) {
             xResult = yResult = true;
         }
 
-        //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (xResult && this.vY === 0) {
             if (this.x + r > tX + tW)
                 this.vY = -1;
@@ -114,7 +112,7 @@
         var r = this.radius / 2;
         var result = isCircleToRect(this.x, this.y, this.radius, tX, tY, tW, tH);
 
-        if (result) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ?
+        if (result) { 
 
             xResult = this.x + r >= tX && this.x - r <= tX + tW;
             yResult = this.y + r >= tY && this.y - r <= tY + tH;
@@ -179,6 +177,7 @@ function startBall(x, y, b) {
     o.color.style = dColor;
     o.bonusTime = 0;
     o.inTeleport = false;
+    o.wallBlows = 0;
     bCount++;
     if (o.launched) {
         var a = Math.random() * (Math.PI * 2);
@@ -320,6 +319,11 @@ function testStartBall() {
     o.vY = Number(document.getElementById("vy").value);
     o.active = true;
     o.launched = true;
+    o.bonus = "none";
+    o.color.style = dColor;
+    o.bonusTime = 0;
+    o.inTeleport = false;
+    o.wallBlows = 0;
     bCount++;
 
 }
