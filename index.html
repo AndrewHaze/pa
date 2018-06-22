@@ -410,6 +410,10 @@
                                 o.y = oldY;
                                 o.vX = -o.vX;
                                 o.inTeleport = false;
+                                o.wallBlows++;
+                                if (o.wallBlows >= 5) {
+                                    o.vY -= 1;
+                                }
                                 continue;
                             }
 
@@ -417,6 +421,10 @@
                                 o.x = stage.canvas.width - o.radius - 1;
                                 o.y = oldY;
                                 o.vX = -o.vX;
+                                o.wallBlows++;
+                                if (o.wallBlows >= 5) {
+                                    o.vY -= 1;
+                                }
                                 o.inTeleport = false;
                                 continue;
                             }
@@ -425,6 +433,7 @@
                                 o.x = oldX;
                                 o.y = o.radius + 1;
                                 o.vY = -o.vY;
+                                o.wallBlows = 0;
                                 o.inTeleport = false;
                                 continue;
                             }
@@ -444,10 +453,11 @@
                                         continue;
                                     }
                                     m.touching = true;
+                                    o.wallBlows = 0;
                                     brickCollision++;
                                 }
                             }
-
+                            
                             for (msn in Masonry) {
                                 m = Masonry[msn];
                                 if (!m || !m.touching) {
