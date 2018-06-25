@@ -190,6 +190,7 @@
 
             var canvas; //Канвас
             var stage; //Сцена
+            var ctx;
 
             var messageField;
             var Img = new Object();
@@ -201,6 +202,7 @@
 
             function init() {
                 canvas = document.getElementById("gameCanvas");
+                ctx = canvas.getContext("2d");
                 stage = new createjs.Stage(canvas);
                 messageField = new createjs.Text("Welcome: Click to play", "bold 24px Arial", "#000000");
                 messageField.maxWidth = 1000;
@@ -456,7 +458,7 @@
                                     brickCollision++;
                                 }
                             }
-                            
+
                             for (msn in Masonry) {
                                 m = Masonry[msn];
                                 if (!m || !m.touching) {
@@ -511,7 +513,15 @@
                                                 brickCollision = 0;
                                                 o.x = Masonry[n].x + 25;
                                                 o.y = Masonry[n].y + 12;
-                                                var angle = Math.random() * (Math.PI * 2);
+                                                do {
+                                                    var angle = Math.random() * (Math.PI * 2);
+                                                    o.vX = Math.sin(angle) * (25 + bRadius);
+                                                    o.vY = Math.cos(angle) * (15 + bRadius);
+                                                    var img_data = ctx.getImageData(o.x + o.vX, o.y + o.vY, 1, 1).data;
+                                                    var R = img_data[0];
+                                                    var G = img_data[1];
+                                                    var B = img_data[2];
+                                                } while (R === 230 && G === 230 && B === 250)
                                                 o.vX = Math.sin(angle) * 5;
                                                 o.vY = Math.cos(angle) * 5;
                                             }
@@ -543,13 +553,13 @@
                                     o.vX += .05;
                                 else
                                     o.vX -= .05;
-                                
+
                                 choice = Math.random() >= 0.5;
                                 if (choice)
                                     o.vY += .05;
                                 else
                                     o.vY -= .05;
-                                
+
                             } else if (brickCollision < 0) {
                                 o.vY = -o.vY * 1.2;
                                 o.vX = -o.vX * 1.2;
@@ -903,7 +913,7 @@
                 } else {
                     messageField.text = "Game Pause";
                     stage.addChild(messageField);
-                    
+
                 }
                 stage.update(event);
             }
@@ -1314,7 +1324,7 @@
                     }
                 });
                 stage.on("stagemousemove", function (evt) {
-                    Platform.x = evt.rawX - Platform.width/2;
+                    Platform.x = evt.rawX - Platform.width / 2;
                     document.getElementById('mx').innerHTML = evt.rawX;
                     document.getElementById('my').innerHTML = ~~evt.rawY;
                 });
