@@ -331,7 +331,6 @@
                             }
 
                             if (o.bulletCollision(m.x, m.y, bW, bH)) {
-                                //createjs.Ticker.paused = true;
                                 o.active = false;
                                 stage.removeChild(o);
                                 switch (m.type) {
@@ -1385,7 +1384,7 @@
                 document.getElementById('lives').innerHTML = lives;
                 document.getElementById('score').innerHTML = score;
                 document.getElementById('dashboard').style.opacity = "1";
-                stage.mouseMoveOutside = false;
+                stage.mouseMoveOutside = true;
                 messageField.y = canvas.height / 2;
             }
         </script>
