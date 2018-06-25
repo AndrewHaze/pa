@@ -57,8 +57,11 @@
         var k, m, nx, ny, ox;
         if (type === "j")
             return;
+        oldX = Math.round(oldX);
+        oldY = Math.round(oldY);
+        this.x = Math.round(this.x);
+        this.y = Math.round(this.y);
         if (isCircleToRect(this.x, this.y, rr, tX, tY, tW, tH)) {
-
             if (oldX !== this.x) {
                 m = (oldX * this.y - oldY * this.x) / (oldX - this.x);
             } else
@@ -67,7 +70,6 @@
             nx = this.x;
             ny = this.y;
             if (oldX >= nx) {
-
                 while (canvas.width - this.radius >= nx) {
                     ny = k * nx + m;
                     if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
@@ -84,11 +86,8 @@
                     nx--;
                 }
             }
-            if (ny > 300)
-                ny = 300;
             this.x = nx;
             this.y = ny;
-            // createjs.Ticker.paused = true;
         } ///
 
         xResult = this.x + r >= tX && this.x - r <= tX + tW;
