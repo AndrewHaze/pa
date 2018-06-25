@@ -20,11 +20,11 @@
         <link href="css/game.css" rel="stylesheet" type="text/css" />
     </head>
 
-    <body onload = "init();">
+    <body onload = "init()"; onclick = "launch()";>
         <div id = "content" class = "container">
             <header class="SoundJS">
                 <h1>Project A</h1>
-                <div class="version">Version 1.0 Alpha <?= date('d-m-Y'); ?></div>
+                <div class="version">Version 1.0 Alpha</div>
             </header>
             <div class="control_panel">
                 <div id='cp_form'>
@@ -1135,6 +1135,13 @@
                 }
             }
 
+            function launch() {
+                for (b in Balls) {
+                    var p = Balls[b];
+                    p.launched = true;
+                }
+            }
+
             function teleportIn() {
                 function indexOf() {
                     for (var i = 0; i < Masonry.length; i++) {
@@ -1318,11 +1325,9 @@
                 stage.addChild(Platform);
 
                 stage.on("stagemousedown", function () {
-                    for (b in Balls) {
-                        var p = Balls[b];
-                        p.launched = true;
-                    }
+                    launch();
                 });
+
                 stage.on("stagemousemove", function (evt) {
                     Platform.x = evt.rawX - Platform.width / 2;
                     document.getElementById('mx').innerHTML = evt.rawX;
