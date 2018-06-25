@@ -130,11 +130,13 @@
             }
 
             if (this.x >= tX && this.x <= tX + this.radius * 2.5) {
-                this.vX = -3;
+                this.vX = -this.vX;
+                if (this.vX > -1) this.vX = -3; 
             }
 
             if (this.x >= tX + tW - this.radius * 2.5 && this.x <= tX + tW) {
-                this.vX = 3;
+                this.vX = Math.abs(this.vX);
+                if (this.vX < 1) this.vX = 3; 
             }
 
             return result;
