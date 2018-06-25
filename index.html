@@ -522,8 +522,8 @@
                                                     var G = img_data[1];
                                                     var B = img_data[2];
                                                 } while (R === 230 && G === 230 && B === 250)
-                                                o.vX = Math.sin(angle) * 5;
-                                                o.vY = Math.cos(angle) * 5;
+                                                o.vX = Math.round(Math.sin(angle) * 5);
+                                                o.vY = Math.round(Math.cos(angle) * 5);
                                             }
                                     }
                                 } else {
