@@ -61,7 +61,9 @@
         oldY = Math.round(oldY);
         this.x = Math.round(this.x);
         this.y = Math.round(this.y);
+        //createjs.Ticker.paused = true;
         if (isCircleToRect(this.x, this.y, rr, tX, tY, tW, tH)) {
+            //createjs.Ticker.paused = true;
             if (oldX !== this.x) {
                 m = (oldX * this.y - oldY * this.x) / (oldX - this.x);
             } else
@@ -193,6 +195,10 @@ function startBall(x, y, b) {
         o.vX = 0;
         o.vY = -5;
     }
+}
+
+function isPointToRect(cx, cy, radius, rx, ry, width, height) {
+    return ((cx > rx + radius && cx < rx + width - radius) && (cy > ry + radius && cy < ry + width - height)); 
 }
 
 
