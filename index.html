@@ -24,7 +24,7 @@
         <div id = "content" class = "container">
             <header class="SoundJS">
                 <h1>Project A</h1>
-                <div class="version">Version 1.0 Alpha</div>
+                <div class="version">Version 1.110 Alpha</div>
             </header>
             <div class="control_panel">
                 <div id='cp_form'>
@@ -443,19 +443,39 @@
 
                             xResult = yResult = false;
 
-
                             for (msn in Masonry) {
                                 m = Masonry[msn];
                                 if (!m || !m.active) {
                                     continue;
                                 }
-                                if (isCircleToRect(o.x, o.y, o.radius, m.x, m.y, bW, bH)) {
-                                    if (m.type === "j" && o.inTeleport) {
+
+                                if (isPointToRect(o.x, o.y, o.radius, m.x, m.y, bW, bH) && m.type === "h") {
+                                    m.touching = true;
+                                    brickCollision++;
+                                    console.log("hit");
+                                    break;
+                                }
+
+                            }
+
+
+                            if (brickCollision === 0) {
+                                for (msn in Masonry) {
+                                    m = Masonry[msn];
+                                    if (!m || !m.active) {
                                         continue;
                                     }
-                                    m.touching = true;
-                                    o.wallBlows = 0;
-                                    brickCollision++;
+                                    if (isCircleToRect(o.x, o.y, o.radius, m.x, m.y, bW, bH)) {
+                                        if (m.type === "j" && o.inTeleport) {
+                                            continue;
+                                        }
+                                        m.touching = true;
+                                        if (isPointToRect(o.x, o.y, o.radius, m.x, m.y, bW, bH) && m.type === "h") {
+                                            break;
+                                        }
+                                        o.wallBlows = 0;
+                                        brickCollision++;
+                                    }
                                 }
                             }
 
