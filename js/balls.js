@@ -21,8 +21,8 @@
     p.launched;
 
     p.inTeleport;
-    p.ballPlatformOffset; //��������� ���� �� �. ���� ���������
-    p.wallBlows; //����� ������ ������ � ���. �����
+    p.ballPlatformOffset; 
+    p.wallBlows; 
 
 
     // public methods:
