@@ -7,7 +7,7 @@
 
     var p = createjs.extend(Ball, createjs.Shape);
 
-// public properties:
+    // public properties:
     p.radius; //visual radial size
     p.bonus;
     p.bonusTime;
@@ -21,11 +21,11 @@
     p.launched;
 
     p.inTeleport;
-    p.ballPlatformOffset; //положение шара от л. края платформы
-    p.wallBlows; //число ударов только о вер. стены
+    p.ballPlatformOffset; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    p.wallBlows; //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅ
 
 
-// public methods:
+    // public methods:
 
     //handle drawing a Ball
     p.getShape = function (c, r) {
@@ -92,20 +92,23 @@
             this.y = ny;
         } ///
 
-        xResult = this.x + r >= tX && this.x - r <= tX + tW;
-        yResult = this.y + r >= tY && this.y - r <= tY + tH;
+        if (this.x + r >= tX && this.x - r <= tX + tW)
+            xResult++;
 
-        if (!xResult && !yResult) {
-            xResult = yResult = true;
+        if (this.y + r >= tY && this.y - r <= tY + tH)
+            yResult++;
+
+        if (xResult === 0 && yResult === 0) {
+            xResult = yResult = 1;
         }
 
-        if (xResult && this.vY === 0) {
+        if (xResult > 0 && this.vY === 0) {
             if (this.x + r > tX + tW)
                 this.vY = -1;
             else
                 this.vY = 1;
         }
-        if (yResult && this.vX === 0) {
+        if (yResult > 0 && this.vX === 0) {
             if (this.y + r > tY + tH)
                 this.vX = -1;
             else
@@ -119,26 +122,29 @@
 
         if (result) {
 
-            xResult = this.x + r >= tX && this.x - r <= tX + tW;
-            yResult = this.y + r >= tY && this.y - r <= tY + tH;
+            if (this.x + r >= tX && this.x - r <= tX + tW)
+                xResult++;
 
-            if (xResult) {
+            if (this.y + r >= tY && this.y - r <= tY + tH)
+                yResult++;
+
+            if (xResult > 0) {
                 this.y = Platform.y - this.radius;
                 this.vY = -this.vY;
             }
 
-            if (yResult) {
+            if (yResult > 0) {
                 this.vX = -this.vX;
             }
 
             if (this.x >= tX && this.x <= tX + this.radius * 2.5) {
                 this.vX = -this.vX;
-                if (this.vX > -1) this.vX = -3; 
+                if (this.vX > -1) this.vX = -3;
             }
 
             if (this.x >= tX + tW - this.radius * 2.5 && this.x <= tX + tW) {
                 this.vX = Math.abs(this.vX);
-                if (this.vX < 1) this.vX = 3; 
+                if (this.vX < 1) this.vX = 3;
             }
 
             return result;
@@ -174,7 +180,7 @@ function getBall() {
 }
 
 function startBall(x, y, b) {
-//create the bullet
+    //create the bullet
     var o = Balls[getBall()];
     o.ballPlatformOffset = Math.round(Platform.width / 2);
     o.x = x + o.ballPlatformOffset;
@@ -198,7 +204,7 @@ function startBall(x, y, b) {
 }
 
 function isPointToRect(cx, cy, radius, rx, ry, width, height) {
-    return ((cx > rx + radius && cx < rx + width - radius) && (cy > ry + radius && cy < ry + width - height)); 
+    return ((cx > rx + radius && cx < rx + width - radius) && (cy > ry + radius && cy < ry + width - height));
 }
 
 
@@ -309,16 +315,16 @@ function ballSetBonus(ball, bonus) {
             }
             break;
         case "none":
-        for (b in Balls) {
-            o = Balls[b];
-            if (!o || !o.active) {
-                continue;
-            }
-            o.bonus = "none";
-            o.color.style = dColor;
-            o.bonusTime = 0;
+            for (b in Balls) {
+                o = Balls[b];
+                if (!o || !o.active) {
+                    continue;
+                }
+                o.bonus = "none";
+                o.color.style = dColor;
+                o.bonusTime = 0;
 
-        }
+            }
     }
 
 }
