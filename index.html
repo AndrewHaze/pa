@@ -25,7 +25,7 @@
     <div id="content" class="container">
         <header class="SoundJS">
             <h1>Project A</h1>
-            <div class="version">Version 1.120 Alpha</div>
+            <div class="version">Version 1.140 Alpha</div>
         </header>
         <div class="control_panel">
             <div id='cp_form'>
@@ -206,7 +206,7 @@
 
         var messageField;
         var Img = new Object();
-        var xyz;
+        var xyz = 0;
 
         //register key functions
         document.onkeydown = handleKeyDown;
@@ -416,8 +416,9 @@
                     oldY = o.y;
 
                     o.tick(event);
-
+                    
                     if (o.launched) {
+                        
                         if (o.x - o.radius <= 0) {
                             o.x = o.radius + 1;
                             o.y = oldY;
@@ -454,7 +455,6 @@
                         brickCollision = 0;
 
                         xResult = yResult = 0;
-
                         for (msn in Masonry) {
                             m = Masonry[msn];
                             if (!m || !m.active) {
@@ -469,7 +469,6 @@
                             }
 
                         }
-
 
                         if (brickCollision === 0) {
                             for (msn in Masonry) {
@@ -621,7 +620,6 @@
                             if (bCount <= 0) {
                                 startLevelAnimation("p_born");
                                 lives--;
-                                //createjs.Ticker.paused = true;
                                 document.getElementById('lives').innerHTML = lives;
                             }
                             //если есть сетка
