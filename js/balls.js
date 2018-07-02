@@ -54,24 +54,25 @@
     p.ballBrickCollision = function (tX, tY, tW, tH, type) {
         var rr = this.radius;
         var r = this.radius / 2;
-        var k, m, nx, ny, ox;
+        var k, m, nx, ny, yy;
         if (type === "j")
             return;
         oldX = Math.round(oldX);
         oldY = Math.round(oldY);
         this.x = Math.round(this.x);
         this.y = Math.round(this.y);
-        //createjs.Ticker.paused = true;
+        
         if (isCircleToRect(this.x, this.y, rr, tX, tY, tW, tH)) {
-            //createjs.Ticker.paused = true;
             if (oldX !== this.x) {
                 m = (oldX * this.y - oldY * this.x) / (oldX - this.x);
             } else
                 m = 0;
             k = (oldY - m) / oldX;
+            
             nx = this.x;
             ny = this.y;
-            if (oldX >= nx) {
+            
+            if (oldX > nx) {
                 while (canvas.width - this.radius >= nx) {
                     ny = k * nx + m;
                     if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
@@ -79,7 +80,7 @@
                     }
                     nx++;
                 }
-            } else {
+            } else if (oldX < nx) {
                 while (this.radius <= nx) {
                     ny = k * nx + m;
                     if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
@@ -87,11 +88,18 @@
                     }
                     nx--;
                 }
+            } else if (oldX === nx) {
+                yy = -1 * Math.sign(this.vY);
+                while (canvas.height - this.radius >= ny && this.radius <= ny) {
+                    ny += yy;
+                    if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
+                        break;
+                    }
+                }
             }
             this.x = nx;
             this.y = ny;
-        } ///
-
+        } 
         if (this.x + r >= tX && this.x - r <= tX + tW)
             xResult++;
 
@@ -343,7 +351,7 @@ function testStartBall() {
     o.inTeleport = false;
     o.wallBlows = 0;
     bCount++;
-
+    //createjs.Ticker.paused = true;
 }
 
 function Kill() {
