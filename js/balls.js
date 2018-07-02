@@ -21,8 +21,8 @@
     p.launched;
 
     p.inTeleport;
-    p.ballPlatformOffset; 
-    p.wallBlows; 
+    p.ballPlatformOffset;
+    p.wallBlows;
 
 
     // public methods:
@@ -52,8 +52,6 @@
     };
 
     p.ballBrickCollision = function (tX, tY, tW, tH, type) {
-        var rr = this.radius;
-        var r = this.radius / 2;
         var k, m, nx, ny, yy;
         if (type === "j")
             return;
@@ -61,21 +59,21 @@
         oldY = Math.round(oldY);
         this.x = Math.round(this.x);
         this.y = Math.round(this.y);
-        
-        if (isCircleToRect(this.x, this.y, rr, tX, tY, tW, tH)) {
+
+        if (isCircleToRect(this.x, this.y, this.radius, tX, tY, tW, tH)) {
             if (oldX !== this.x) {
                 m = (oldX * this.y - oldY * this.x) / (oldX - this.x);
             } else
                 m = 0;
             k = (oldY - m) / oldX;
-            
+
             nx = this.x;
             ny = this.y;
-            
+
             if (oldX > nx) {
                 while (canvas.width - this.radius >= nx) {
                     ny = k * nx + m;
-                    if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
+                    if (!isCircleToRect(nx, ny, this.radius, tX, tY, tW, tH)) {
                         break;
                     }
                     nx++;
@@ -83,7 +81,7 @@
             } else if (oldX < nx) {
                 while (this.radius <= nx) {
                     ny = k * nx + m;
-                    if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
+                    if (!isCircleToRect(nx, ny, this.radius, tX, tY, tW, tH)) {
                         break;
                     }
                     nx--;
@@ -92,18 +90,18 @@
                 yy = -1 * Math.sign(this.vY);
                 while (canvas.height - this.radius >= ny && this.radius <= ny) {
                     ny += yy;
-                    if (!isCircleToRect(nx, ny, rr, tX, tY, tW, tH)) {
+                    if (!isCircleToRect(nx, ny, this.radius, tX, tY, tW, tH)) {
                         break;
                     }
                 }
             }
             this.x = nx;
             this.y = ny;
-        } 
-        if (this.x + r >= tX && this.x - r <= tX + tW)
+        }
+        if (this.x + this.radius >= tX && this.x - this.radius <= tX + tW)
             xResult++;
 
-        if (this.y + r >= tY && this.y - r <= tY + tH)
+        if (this.y + this.radius >= tY && this.y - this.radius <= tY + tH)
             yResult++;
 
         if (xResult === 0 && yResult === 0) {
@@ -111,13 +109,13 @@
         }
 
         if (xResult > 0 && this.vY === 0) {
-            if (this.x + r > tX + tW)
+            if (this.x + this.radius > tX + tW)
                 this.vY = -1;
             else
                 this.vY = 1;
         }
         if (yResult > 0 && this.vX === 0) {
-            if (this.y + r > tY + tH)
+            if (this.y + this.radius > tY + tH)
                 this.vX = -1;
             else
                 this.vX = 1;
@@ -125,37 +123,30 @@
     };
 
     p.ballPlatformCollision = function (tX, tY, tW, tH) {
-        var r = this.radius / 2;
         var result = isCircleToRect(this.x, this.y, this.radius, tX, tY, tW, tH);
-
         if (result) {
+            var n = 5;
+            if (this.x >= tX && this.x <= tX + this.radius * 3) {
+                this.vX = Math.round(Math.sin(3.8) * n);
+                this.vY = Math.round(Math.cos(3.8) * n);
+                return result;
+            }
+            if (this.x >= tX + tW - this.radius * 3 && this.x <= tX + tW) {
+                this.vX = Math.round(Math.sin(2.2) * n);
+                this.vY = Math.round(Math.cos(2.2) * n);
+                return result;
+            }
 
-            if (this.x + r >= tX && this.x - r <= tX + tW)
-                xResult++;
-
-            if (this.y + r >= tY && this.y - r <= tY + tH)
-                yResult++;
-
-            if (xResult > 0) {
+            if (this.x + this.radius >= tX && this.x - this.radius <= tX + tW) {
                 this.y = Platform.y - this.radius;
                 this.vY = -this.vY;
+                return result;
             }
 
-            if (yResult > 0) {
+            if (this.y + this.radius >= tY && this.y - this.radius <= tY + tH) {
                 this.vX = -this.vX;
+                return result;
             }
-
-            if (this.x >= tX && this.x <= tX + this.radius * 2.5) {
-                this.vX = -this.vX;
-                if (this.vX > -1) this.vX = -3;
-            }
-
-            if (this.x >= tX + tW - this.radius * 2.5 && this.x <= tX + tW) {
-                this.vX = Math.abs(this.vX);
-                if (this.vX < 1) this.vX = 3;
-            }
-
-            return result;
         }
     };
 
@@ -323,16 +314,16 @@ function ballSetBonus(ball, bonus) {
             }
             break;
         case "none":
-            for (b in Balls) {
-                o = Balls[b];
-                if (!o || !o.active) {
-                    continue;
-                }
-                o.bonus = "none";
-                o.color.style = dColor;
-                o.bonusTime = 0;
-
+        for (b in Balls) {
+            o = Balls[b];
+            if (!o || !o.active) {
+                continue;
             }
+            o.bonus = "none";
+            o.color.style = dColor;
+            o.bonusTime = 0;
+
+        }
     }
 
 }
@@ -351,7 +342,6 @@ function testStartBall() {
     o.inTeleport = false;
     o.wallBlows = 0;
     bCount++;
-    //createjs.Ticker.paused = true;
 }
 
 function Kill() {
