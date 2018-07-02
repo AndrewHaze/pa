@@ -132,8 +132,8 @@
                 return result;
             }
             if (this.x >= tX + tW - this.radius * 3 && this.x <= tX + tW) {
-                this.vX = Math.round(Math.sin(2.9) * n);
-                this.vY = Math.round(Math.cos(2.9) * n);
+                this.vX = Math.round(Math.sin(2.8) * n);
+                this.vY = Math.round(Math.cos(2.8) * n);
                 return result;
             }
 
