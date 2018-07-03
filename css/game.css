@@ -137,7 +137,7 @@ h1 {
 }
 
 .control_panel {
-    /*display: none;*/
+    display: none;
     position: absolute;
     right: 50px;
     top: 130px;
