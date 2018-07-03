@@ -322,10 +322,8 @@ function ballSetBonus(ball, bonus) {
             o.bonus = "none";
             o.color.style = dColor;
             o.bonusTime = 0;
-
         }
     }
-
 }
 
 function testStartBall() {
