@@ -23,6 +23,7 @@ body {
 }
 
 .gameControls {
+    display: none;
     position: absolute;
     margin-left: auto;
     margin-right: auto;
