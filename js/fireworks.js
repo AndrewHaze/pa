@@ -69,7 +69,7 @@ function Bomb(){
       self.previousRadius = self.radius;
       self.radius += deltaRadius / explosionDividerFactor;
       self.explodingDuration--;
-      if(self.explodingDuration == 0){
+      if(self.explodingDuration === 0) {
         self.alive = false;
       }
     }
@@ -152,8 +152,8 @@ function Particle(parent, angle, speed){
 function Controller(){
   var self = this;
   self.canvas = document.getElementById("gameCanvas");
-  self.canvas.width = screenWidth;
-  self.canvas.height = screenHeight;
+  //self.canvas.width = screenWidth;
+  //self.canvas.height = screenHeight;
   self.ctx = self.canvas.getContext("2d");
 
   function setSpeedParams(){
