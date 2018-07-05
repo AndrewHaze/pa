@@ -127,13 +127,14 @@
         if (result) {
             var n = 5;
             if (this.x >= tX && this.x <= tX + this.radius * 3) {
-                this.vX = Math.round(Math.sin(3.8) * n);
-                this.vY = Math.round(Math.cos(3.8) * n);
+                this.vX = Math.round(Math.sin(200 * Math.PI / 180) * n);
+                this.vY = Math.round(Math.cos(200 * Math.PI / 180) * n);
+                
                 return result;
             }
             if (this.x >= tX + tW - this.radius * 3 && this.x <= tX + tW) {
-                this.vX = Math.round(Math.sin(2.8) * n);
-                this.vY = Math.round(Math.cos(2.8) * n);
+                this.vX = Math.round(Math.sin(160 * Math.PI / 180) * n);
+                this.vY = Math.round(Math.cos(160 * Math.PI / 180) * n);
                 return result;
             }
 
