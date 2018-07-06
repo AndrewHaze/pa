@@ -197,6 +197,7 @@
             var pDefaultColor = ["#343a42", "#343a42"];
             var pCurrentColor = pDefaultColor;
             var pDefaultWidth = 100;
+            var platformNoMove;
             var px; //mouse paused
 
             var Bullets; //Массив снарядов (Bullet)
@@ -1030,29 +1031,28 @@
                         return false;
                     case KEYCODE_A:
                     case KEYCODE_LEFT:
-                        if (LevelAnimation)
-                            return false;
-                        if (Platform.x > 0) {
-                            shiftSpeed = Math.abs(shiftSpeed);
-                            shiftSpeed += 1;
-                            shift = -shiftSpeed;
-                        } else {
-                            shift = 0;
+                        if (!platformNoMove) {
+                            if (Platform.x > 0) {
+                                shiftSpeed = Math.abs(shiftSpeed);
+                                shiftSpeed += 1;
+                                shift = -shiftSpeed;
+                            } else {
+                                shift = 0;
+                            }
                         }
 
                         return false;
                     case KEYCODE_D:
                     case KEYCODE_RIGHT:
-                        if (LevelAnimation)
-                            return false;
-                        if (Platform.x < stage.canvas.width - Platform.width) {
-                            shiftSpeed = Math.abs(shiftSpeed);
-                            shiftSpeed += 1;
-                            shift = shiftSpeed;
-                        } else {
-                            shift = 0;
+                        if (!platformNoMove) {
+                            if (Platform.x < stage.canvas.width - Platform.width) {
+                                shiftSpeed = Math.abs(shiftSpeed);
+                                shiftSpeed += 1;
+                                shift = shiftSpeed;
+                            } else {
+                                shift = 0;
+                            }
                         }
-                        return false;
                     case KEYCODE_W:
                     case KEYCODE_UP:
 
@@ -1074,7 +1074,7 @@
                 switch (e.keyCode) {
                     case KEYCODE_SPACE:
                         createjs.Ticker.paused = !createjs.Ticker.paused;
-                        platformNoMove(createjs.Ticker.paused);
+                        platformNoMove = createjs.Ticker.paused;
                         break;
                     case KEYCODE_A:
                     case KEYCODE_LEFT:
@@ -1089,9 +1089,11 @@
                         break;
                     case KEYCODE_W:
                     case KEYCODE_UP:
-                        for (b in Balls) {
-                            var p = Balls[b];
-                            p.launched = true;
+                        if (!platformNoMove) {
+                            for (b in Balls) {
+                                var p = Balls[b];
+                                p.launched = true;
+                            }
                         }
                         break;
                 }
@@ -1108,7 +1110,7 @@
                     case "p_born":
                         LevelAnimation = true;
                         platformSetBonus("none");
-                        platformNoMove(true);
+                        platformNoMove = true;
                         levelAnimationType = "p_born";
                         aNumber = 0;
                         platformResize(0);
@@ -1127,7 +1129,7 @@
                         levelAnimationType = "";
                         stage.width = 1;
                         Platform.alpha = 1;
-                        platformNoMove(false);
+                        platformNoMove = false;
                         break;
                     case "p_born":
                         LevelAnimation = false;
@@ -1136,7 +1138,7 @@
                         platformResize(pDefaultWidth);
                         Platform.width = pDefaultWidth;
                         startBall(Platform.x, Platform.y, false);
-                        platformNoMove(false);
+                        platformNoMove = false;
                         break;
                 }
 
@@ -1371,18 +1373,22 @@
                 stage.addChild(Platform);
 
                 stage.on("stagemousedown", function () {
+                    if (platformNoMove)
+                        return;
                     launch();
                 });
 
                 stage.on("stagemousemove", function (evt) {
-                    Platform.x = evt.rawX - Platform.width / 2;
                     document.getElementById('mx').innerHTML = evt.rawX;
                     document.getElementById('my').innerHTML = ~~evt.rawY;
+                    if (platformNoMove)
+                        return;
+                    Platform.x = evt.rawX - Platform.width / 2;
                 });
 
                 document.getElementById('level').innerHTML = Number(num) + 1;
 
-                platformNoMove(true);
+                platformNoMove = true;
                 Platform.alpha = 0;
 
                 createjs.Ticker.paused = false;
