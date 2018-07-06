@@ -127,13 +127,13 @@
         if (result) {
             var s = Math.sqrt(Math.pow(this.vX, 2) + Math.pow(this.vY, 2));
             if (this.x >= tX && this.x <= tX + this.radius * 3) {
-                this.vX = Math.round(Math.sin(200 * Math.PI / 180) * s);
-                this.vY = Math.round(Math.cos(200 * Math.PI / 180) * s);
+                this.vX = Math.round(Math.sin(220 * Math.PI / 180) * s);
+                this.vY = Math.round(Math.cos(220 * Math.PI / 180) * s);
                 return result;
             }
             if (this.x >= tX + tW - this.radius * 3 && this.x <= tX + tW) {
-                this.vX = Math.round(Math.sin(160 * Math.PI / 180) * s);
-                this.vY = Math.round(Math.cos(160 * Math.PI / 180) * s);
+                this.vX = Math.round(Math.sin(140 * Math.PI / 180) * s);
+                this.vY = Math.round(Math.cos(140 * Math.PI / 180) * s);
                 return result;
             }
 
