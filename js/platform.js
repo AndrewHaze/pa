@@ -100,16 +100,3 @@ function platformSetBonus(bonus) {                                              
             pCurrentColor = pDefaultColor;
     }
 }
-
-function platformNoMove(m) {
-    if (m) {
-        px = Platform.x;
-        stage.on("stagemousemove", function () {
-            Platform.x = px;
-        });
-    } else {
-        stage.on("stagemousemove", function (evt) {
-            Platform.x = evt.rawX - Platform.width/2;
-        });
-    }
-}
