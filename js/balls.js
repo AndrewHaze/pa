@@ -126,12 +126,12 @@
         var result = isCircleToRect(this.x, this.y, this.radius, tX, tY, tW, tH);
         if (result) {
             var s = Math.sqrt(Math.pow(this.vX, 2) + Math.pow(this.vY, 2));
-            if (this.x >= tX && this.x <= tX + this.radius * 3) {
+            if (this.x + this.radius >= tX && this.x <= tX + this.radius * 3) {
                 this.vX = Math.round(Math.sin(220 * Math.PI / 180) * s);
                 this.vY = Math.round(Math.cos(220 * Math.PI / 180) * s);
                 return result;
             }
-            if (this.x >= tX + tW - this.radius * 3 && this.x <= tX + tW) {
+            if (this.x >= tX + tW - this.radius * 3 && this.x - this.radius <= tX + tW) {
                 this.vX = Math.round(Math.sin(140 * Math.PI / 180) * s);
                 this.vY = Math.round(Math.cos(140 * Math.PI / 180) * s);
                 return result;
