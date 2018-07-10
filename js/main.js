@@ -18,45 +18,45 @@ var LevelAnimation = true;
 var aNumber;
 var levelAnimationType = '';
 
-var Masonry; //Массив bблоков (Brick)
-var mCount; //количество разбиваемых в игре
-var bSkip; //анимация неразб. блока
-var bW = 49; //ширина блока
-var bH = 25; //высота блока
+var Masonry; //РњР°СЃСЃРёРІ bР±Р»РѕРєРѕРІ (Brick)
+var mCount; //РєРѕР»РёС‡РµСЃС‚РІРѕ СЂР°Р·Р±РёРІР°РµРјС‹С… РІ РёРіСЂРµ
+var bSkip; //Р°РЅРёРјР°С†РёСЏ РЅРµСЂР°Р·Р±. Р±Р»РѕРєР°
+var bW = 49; //С€РёСЂРёРЅР° Р±Р»РѕРєР°
+var bH = 25; //РІС‹СЃРѕС‚Р° Р±Р»РѕРєР°
 
 var blastWaves;
 
 var Teleports;
 
 var Bonuses;
-var bFactor = 1; //коэффициент увеличения времени действия бонусов
-//  Счетчики время действия бонусов уровня
+var bFactor = 1; //РєРѕСЌС„С„РёС†РёРµРЅС‚ СѓРІРµР»РёС‡РµРЅРёСЏ РІСЂРµРјРµРЅРё РґРµР№СЃС‚РІРёСЏ Р±РѕРЅСѓСЃРѕРІ
+//  РЎС‡РµС‚С‡РёРєРё РІСЂРµРјСЏ РґРµР№СЃС‚РІРёСЏ Р±РѕРЅСѓСЃРѕРІ СѓСЂРѕРІРЅСЏ
 var floor; //bonus Floor
 var shield; //bonus Shield
 var absent; //bonus Absent
 
-var Pests; //массив вредителей (Pest)
-var pestCount = 0; //текущще количество
-var maxPestCount; //максимальное количество
-var maxPestCount_KIM; //запоминалка для вост. количества после отмены бонуса absent
-var timeToPest; //пауза до следуещего
-var nextPest; //ticks до тех пор, пока не появится новый вредие
+var Pests; //РјР°СЃСЃРёРІ РІСЂРµРґРёС‚РµР»РµР№ (Pest)
+var pestCount = 0; //С‚РµРєСѓС‰С‰Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ
+var maxPestCount; //РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ
+var maxPestCount_KIM; //Р·Р°РїРѕРјРёРЅР°Р»РєР° РґР»СЏ РІРѕСЃС‚. РєРѕР»РёС‡РµСЃС‚РІР° РїРѕСЃР»Рµ РѕС‚РјРµРЅС‹ Р±РѕРЅСѓСЃР° absent
+var timeToPest; //РїР°СѓР·Р° РґРѕ СЃР»РµРґСѓРµС‰РµРіРѕ
+var nextPest; //ticks РґРѕ С‚РµС… РїРѕСЂ, РїРѕРєР° РЅРµ РїРѕСЏРІРёС‚СЃСЏ РЅРѕРІС‹Р№ РІСЂРµРґРёРµ
 
-var Balls; //Массив шаров (Ball)
-var bColor; //цвет шара с бонусом
-var dColor = "#ff68f9"; //цвет шара по умолчанию
-var bRadius = 9; //радиус шара
-var bCount; //количество шаров в игре
+var Balls; //РњР°СЃСЃРёРІ С€Р°СЂРѕРІ (Ball)
+var bColor; //С†РІРµС‚ С€Р°СЂР° СЃ Р±РѕРЅСѓСЃРѕРј
+var dColor = "#ff68f9"; //С†РІРµС‚ С€Р°СЂР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+var bRadius = 9; //СЂР°РґРёСѓСЃ С€Р°СЂР°
+var bCount; //РєРѕР»РёС‡РµСЃС‚РІРѕ С€Р°СЂРѕРІ РІ РёРіСЂРµ
 var oldX, oldY;
 var xResult;
 var yResult;
 var brickCollision;
 var currentLevel;
-var lives; //количество "жизней"
-var score; //текущий счет
+var lives; //РєРѕР»РёС‡РµСЃС‚РІРѕ "Р¶РёР·РЅРµР№"
+var score; //С‚РµРєСѓС‰РёР№ СЃС‡РµС‚
 var scoreThreshold;
 
-var Platform; //Платформа (platformObject)
+var Platform; //РџР»Р°С‚С„РѕСЂРјР° (platformObject)
 var pBonusColor = [];
 var pDefaultColor = ["#343a42", "#343a42"];
 var pCurrentColor = pDefaultColor;
@@ -64,14 +64,14 @@ var pDefaultWidth = 100;
 var platformNoMove;
 var px; //mouse paused
 
-var Bullets; //Массив снарядов (Bullet)
+var Bullets; //РњР°СЃСЃРёРІ СЃРЅР°СЂСЏРґРѕРІ (Bullet)
 var rof;
 
-var shift; //смещение платформы
-var shiftSpeed; //скорость смещения
+var shift; //СЃРјРµС‰РµРЅРёРµ РїР»Р°С‚С„РѕСЂРјС‹
+var shiftSpeed; //СЃРєРѕСЂРѕСЃС‚СЊ СЃРјРµС‰РµРЅРёСЏ
 
-var canvas; //Канвас
-var stage; //Сцена
+var canvas; //РљР°РЅРІР°СЃ
+var stage; //РЎС†РµРЅР°
 var ctx;
 
 var messageField;
@@ -238,7 +238,7 @@ function tick(event) {
                             break;
                         case "h":
                             m.color.style = "#f2f2fc";
-                            bSkip = 2; //перекрасить и пропустить n-1 тик
+                            bSkip = 2; //РїРµСЂРµРєСЂР°СЃРёС‚СЊ Рё РїСЂРѕРїСѓСЃС‚РёС‚СЊ n-1 С‚РёРє
                             break;
                         case "i":
                             stage.removeChild(m);
@@ -367,7 +367,7 @@ function tick(event) {
                     }
 
                     if (o.bonus !== "ram") {
-                        //вынимаем, отражаем //////////////////
+                        //РІС‹РЅРёРјР°РµРј, РѕС‚СЂР°Р¶Р°РµРј //////////////////
                         o.ballBrickCollision(m.x, m.y, bW, bH, m.type);
                         ///////////////////////////////////////
                         switch (m.type) {
@@ -397,7 +397,7 @@ function tick(event) {
                             case "h":
                                 o.inTeleport = false;
                                 m.color.style = "#f2f2fc";
-                                bSkip = 2; //перекрасить и пропустить n-1 тик
+                                bSkip = 2; //РїРµСЂРµРєСЂР°СЃРёС‚СЊ Рё РїСЂРѕРїСѓСЃС‚РёС‚СЊ n-1 С‚РёРє
                                 break;
                             case "i":
                                 o.inTeleport = false;
@@ -433,7 +433,7 @@ function tick(event) {
                                 scoreUp(1);
                                 mCount--;
                             }
-                            m.type = "b"; //разбиваемый
+                            m.type = "b"; //СЂР°Р·Р±РёРІР°РµРјС‹Р№
                             m.bonus = "none";
                             m.strength = 0;
                             m.color.style = "transparent";
@@ -492,7 +492,7 @@ function tick(event) {
                         lives--;
                         document.getElementById('lives').innerHTML = lives;
                     }
-                    //если есть сетка
+                    //РµСЃР»Рё РµСЃС‚СЊ СЃРµС‚РєР°
                 } else if (floor > 0 && (o.y + o.radius >= stage.canvas.height)) {
                     o.vY = -o.vY;
                 }
@@ -600,7 +600,7 @@ function tick(event) {
                         // play sound
                         //createjs.Sound.play("break", {interrupt: createjs.Sound.INTERUPT_LATE, offset: 0.8});
 
-                        //ускоряем шарик
+                        //СѓСЃРєРѕСЂСЏРµРј С€Р°СЂРёРє
                         p.vX *= 1.05;
                         p.vY *= 1.05;
 
@@ -754,7 +754,7 @@ function tick(event) {
 
         if (Platform.bonusTime > 0) {
             if (Platform.bonus === "ack") {
-                if (rof === 18) { //количество тиков между выстрелами
+                if (rof === 18) { //РєРѕР»РёС‡РµСЃС‚РІРѕ С‚РёРєРѕРІ РјРµР¶РґСѓ РІС‹СЃС‚СЂРµР»Р°РјРё
                     var xx = Platform.x;
                     var yy = Platform.y - 6;
                     startBullet(xx + 15, yy);
@@ -860,7 +860,7 @@ function mix(color_1, color_2, weight) {
     var color = "#";
     color_1 = String(color_1).replace("#", "");
     color_2 = String(color_2).replace("#", "");
-    for (var i = 0; i <= 5; i += 2) { // loop through each of the 3 hex pairs—red, green, and blue
+    for (var i = 0; i <= 5; i += 2) { // loop through each of the 3 hex pairsвЂ”red, green, and blue
         var v1 = h2d(color_1.substr(i, 2)), // extract the current pairs
                 v2 = h2d(color_2.substr(i, 2)),
                 // combine the current pairs from each source color, according to the specified weight
@@ -1030,7 +1030,7 @@ function blast(i) {
                     break;
                 case "h":
                     m.color.style = "#f2f2fc";
-                    bSkip = 2; //перекрасить и пропустить n-1 тик
+                    bSkip = 2; //РїРµСЂРµРєСЂР°СЃРёС‚СЊ Рё РїСЂРѕРїСѓСЃС‚РёС‚СЊ n-1 С‚РёРє
                     break;
                 case "i":
                     stage.removeChild(m);
@@ -1168,7 +1168,7 @@ function startLevel(num) { /****************************************************
 
     startLevelAnimation("startLevel");
 
-    /* Сброс глобальных */
+    /* РЎР±СЂРѕСЃ РіР»РѕР±Р°Р»СЊРЅС‹С… */
     Pests = [];
     nextPest = timeToPest * 2;
     maxPestCount = 6;
@@ -1216,7 +1216,7 @@ function startLevel(num) { /****************************************************
             if (t !== "a" && t !== "h" && t !== "j")
                 mCount++;
             if (t === "j") {
-                Teleports[j] = i; //массив с порядковыми номерами телепортов
+                Teleports[j] = i; //РјР°СЃСЃРёРІ СЃ РїРѕСЂСЏРґРєРѕРІС‹РјРё РЅРѕРјРµСЂР°РјРё С‚РµР»РµРїРѕСЂС‚РѕРІ
                 j++;
             }
             strIndex += 3;
@@ -1225,7 +1225,7 @@ function startLevel(num) { /****************************************************
         }
         cy += bH + 1;
     }
-    //вначале всё активируем, для отрисовки и формирования массива, потом снимаем активацию с невидимых блоков (тип "а") 
+    //РІРЅР°С‡Р°Р»Рµ РІСЃС‘ Р°РєС‚РёРІРёСЂСѓРµРј, РґР»СЏ РѕС‚СЂРёСЃРѕРІРєРё Рё С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ РјР°СЃСЃРёРІР°, РїРѕС‚РѕРј СЃРЅРёРјР°РµРј Р°РєС‚РёРІР°С†РёСЋ СЃ РЅРµРІРёРґРёРјС‹С… Р±Р»РѕРєРѕРІ (С‚РёРї "Р°") 
     for (y = 0; y < 121; y++) {
         if (Masonry[y].type === "a")
             Masonry[y].active = false;
