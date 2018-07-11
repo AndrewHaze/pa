@@ -1,2 +1,2 @@
 # Project-A
-Arkanoid (ECMAScript 2015 + EaselJS)
+Arkanoid (Powered by ECMAScript 2015 + EaselJS)
