@@ -76,7 +76,7 @@ var ctx;
 
 var messageField;
 var Img = new Object();
-var xyz = 0;
+var iAmFed;
 
 //register key functions
 document.onkeydown = handleKeyDown;
@@ -86,7 +86,7 @@ function init() {
     canvas = document.getElementById("gameCanvas");
     ctx = canvas.getContext("2d");
     stage = new createjs.Stage(canvas);
-    
+
     messageField = new createjs.Text("Welcome: Click to play", "bold 24px Arial", "#000000");
     messageField.maxWidth = 1000;
     messageField.textAlign = "center";
@@ -94,14 +94,14 @@ function init() {
     messageField.x = canvas.width / 2;
     messageField.y = canvas.height / 3;
     stage.addChild(messageField);
-    
+
     var ua = window.navigator.userAgent.toLowerCase();
     if ((/trident/gi).test(ua) || (/msie/gi).test(ua)) {
         messageField.text = "IE not supported...";
         stage.update();
         return;
-    } 
-    
+    }
+
 
     //good bonus images
     Img.live = new Image();
@@ -343,7 +343,6 @@ function tick(event) {
                     if (isPointToRect(o.x, o.y, o.radius, m.x, m.y, bW, bH) && m.type === "h") {
                         m.touching = true;
                         brickCollision++;
-                        console.log("hit");
                         break;
                     }
 
@@ -365,6 +364,7 @@ function tick(event) {
                             }
                             o.wallBlows = 0;
                             brickCollision++;
+                            iAmFed = 0;
                         }
                     }
                 }
@@ -481,6 +481,11 @@ function tick(event) {
 
                 if (o.ballPlatformCollision(Platform.x, Platform.y, Platform.width, 15)) {
                     //createjs.Ticker.paused = true;
+                    iAmFed++;
+                    if (iAmFed >= 20 && mCount === 1) {
+                        currentLevel++;
+                        startLevel(currentLevel);
+                    }
                     switch (Platform.bonus) {
                         case "magnet":
                             o.launched = false;
@@ -1205,6 +1210,8 @@ function startLevel(num) { /****************************************************
 
     floor = 0; //bonus floor
     absent = 0; //bonus absent
+
+    iAmFed = 0;
 
     createjs.Ticker.paused = true;
     stage.clear();
