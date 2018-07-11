@@ -226,11 +226,10 @@ function isCircleToRect(cx, cy, radius, rx, ry, width, height) {
 
 
 function ballSetBonus(ball, bonus) {
-    var b;
     var o;
     switch (bonus) {
         case "quick":
-            for (b in Balls) {
+            for (let b in Balls) {
                 o = Balls[b];
                 if (!o || !o.active) {
                     continue;
@@ -248,7 +247,7 @@ function ballSetBonus(ball, bonus) {
             break;
         case "invisibility":
             bColor = "#f3f4f5";
-            for (b in Balls) {
+            for (let b in Balls) {
                 o = Balls[b];
                 if (!o || !o.active) {
                     continue;
@@ -260,7 +259,7 @@ function ballSetBonus(ball, bonus) {
             break;
         case "shield":
             bColor = "#a6e6a6";
-            for (b in Balls) {
+            for (let b in Balls) {
                 var o = Balls[b];
                 if (!o || !o.active) {
                     continue;
@@ -272,7 +271,7 @@ function ballSetBonus(ball, bonus) {
             break;
         case "pest":
             bColor = "#aad3eb";
-            for (b in Balls) {
+            for (let b in Balls) {
                 o = Balls[b];
                 if (!o || !o.active) {
                     continue;
@@ -284,7 +283,7 @@ function ballSetBonus(ball, bonus) {
             break;
         case "nobonus":
             bColor = "#bfbfbf";
-            for (b in Balls) {
+            for (let b in Balls) {
                 o = Balls[b];
                 if (!o || !o.active) {
                     continue;
@@ -295,7 +294,7 @@ function ballSetBonus(ball, bonus) {
             }
             break;
         case "slow":
-            for (b in Balls) {
+            for (let b in Balls) {
                 o = Balls[b];
                 if (!o || !o.active) {
                     continue;
@@ -309,12 +308,12 @@ function ballSetBonus(ball, bonus) {
             }
             break;
         case "triple":
-            for (var i = 0; i < 2; i++) {
+            for (let i = 0; i < 2; i++) {
                 startBall(ball.x, ball.y, true);
             }
             break;
         case "none":
-        for (b in Balls) {
+        for (let b in Balls) {
             o = Balls[b];
             if (!o || !o.active) {
                 continue;

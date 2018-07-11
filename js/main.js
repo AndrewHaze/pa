@@ -86,6 +86,7 @@ function init() {
     canvas = document.getElementById("gameCanvas");
     ctx = canvas.getContext("2d");
     stage = new createjs.Stage(canvas);
+    
     messageField = new createjs.Text("Welcome: Click to play", "bold 24px Arial", "#000000");
     messageField.maxWidth = 1000;
     messageField.textAlign = "center";
@@ -93,6 +94,14 @@ function init() {
     messageField.x = canvas.width / 2;
     messageField.y = canvas.height / 3;
     stage.addChild(messageField);
+    
+    var ua = window.navigator.userAgent.toLowerCase();
+    if ((/trident/gi).test(ua) || (/msie/gi).test(ua)) {
+        messageField.text = "IE not supported...";
+        stage.update();
+        return;
+    } 
+    
 
     //good bonus images
     Img.live = new Image();

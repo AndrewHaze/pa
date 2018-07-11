@@ -64,11 +64,12 @@
     //handle reinit for poolings sake
     p.activate = function () {
         this.getShape();
-
         //pick a random direction to move in and base the rotation off of speed
         var angle = Math.random() * (Math.PI * 2);
         this.velX = Math.sin(angle) * 4.33;
+        if (Math.abs(this.velX) < 1) this.velX = 1;
         this.velY = Math.cos(angle) * 4.33;
+        if (Math.abs(this.velY) < 1) this.velXY = 1;
         this.spin = (Math.random() + 0.2) * this.velX;
         this.active = true;
     };
