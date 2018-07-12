@@ -195,7 +195,7 @@ function tick(event) {
 
 
         if (bSkip === 0) {
-            for (msn in Masonry) {
+            for (let msn in Masonry) {
                 var m = Masonry[msn];
                 if (m.type === "h")
                     m.color.style = "#e6e6fa";
@@ -694,7 +694,7 @@ function tick(event) {
                         scoreUp(1);
                         maxPestCount = 0;
                         absent = 1000 * bFactor;
-                        for (pst in Pests) {
+                        for (let pst in Pests) {
                             o = Pests[pst];
                             stage.removeChild(o);
                             o.active = false;
@@ -965,7 +965,7 @@ function handleKeyUp(e) {
         case KEYCODE_W:
         case KEYCODE_UP:
             if (!platformNoMove) {
-                for (b in Balls) {
+                for (let b in Balls) {
                     var p = Balls[b];
                     p.launched = true;
                 }
