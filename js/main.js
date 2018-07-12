@@ -1,18 +1,16 @@
-var PEST_TIME = 400;
-var KEYCODE_ENTER = 13; //useful keycode
-var KEYCODE_SPACE = 32; //useful keycode
-var KEYCODE_UP = 38; //useful keycode
-var KEYCODE_LEFT = 37; //useful keycode
-var KEYCODE_RIGHT = 39; //useful keycode
-var KEYCODE_W = 87; //useful keycode
-var KEYCODE_A = 65; //useful keycode
-var KEYCODE_D = 68; //useful keycode
-
-var KEYCODE_C = 67; //useful keycode
-var KEYCODE_F = 70; //useful keycode
-var KEYCODE_Q = 81; //useful keycode
-var KEYCODE_S = 83; //useful keycode
-var KEYCODE_T = 84; //useful keycode
+const KEYCODE_ENTER = 13; //useful keycode
+const KEYCODE_SPACE = 32; //useful keycode
+const KEYCODE_UP = 38; //useful keycode
+const KEYCODE_LEFT = 37; //useful keycode
+const KEYCODE_RIGHT = 39; //useful keycode
+const KEYCODE_W = 87; //useful keycode
+const KEYCODE_A = 65; //useful keycode
+const KEYCODE_D = 68; //useful keycode
+const KEYCODE_C = 67; //useful keycode
+const KEYCODE_F = 70; //useful keycode
+const KEYCODE_Q = 81; //useful keycode
+const KEYCODE_S = 83; //useful keycode
+const KEYCODE_T = 84; //useful keycode
 
 var LevelAnimation = true;
 var aNumber;
@@ -41,10 +39,10 @@ var maxPestCount; //максимальное количество
 var maxPestCount_KIM; //запоминалка для вост. количества после отмены бонуса absent
 var timeToPest; //пауза до следуещего
 var nextPest; //ticks до тех пор, пока не появится новый вредие
+const PEST_TIME = 400;
 
 var Balls; //Массив шаров (Ball)
 var bColor; //цвет шара с бонусом
-var dColor = "#ff68f9"; //цвет шара по умолчанию
 var bRadius = 9; //радиус шара
 var bCount; //количество шаров в игре
 var oldX, oldY;
@@ -55,6 +53,7 @@ var currentLevel;
 var lives; //количество "жизней"
 var score; //текущий счет
 var scoreThreshold;
+const dColor = "#ff68f9"; //цвет шара по умолчанию
 
 var Platform; //Платформа (platformObject)
 var pBonusColor = [];
@@ -65,14 +64,14 @@ var platformNoMove;
 var px; //mouse paused
 
 var Bullets; //Массив снарядов (Bullet)
-var rof;
+var rof; //Rate of fire
 
 var shift; //смещение платформы
 var shiftSpeed; //скорость смещения
 
 var canvas; //Канвас
 var stage; //Сцена
-var ctx;
+var ctx; //Канвасконтекст для салюта
 
 var messageField;
 var Img = new Object();
@@ -101,7 +100,6 @@ function init() {
         stage.update();
         return;
     }
-
 
     //good bonus images
     Img.live = new Image();
@@ -204,7 +202,7 @@ function tick(event) {
             }
         }
 
-        for (var b in Bullets) {
+        for (let b in Bullets) {
             var o = Bullets[b];
             if (!o || !o.active) {
                 continue;
@@ -217,7 +215,7 @@ function tick(event) {
                 continue;
             }
 
-            for (var msn in Masonry) {
+            for (let msn in Masonry) {
                 m = Masonry[msn];
                 if (!m || !m.active) {
                     continue;
@@ -259,7 +257,7 @@ function tick(event) {
                 }
             } //Bullets for
 
-            for (var pst in Pests) {
+            for (let pst in Pests) {
                 var p = Pests[pst];
                 if (!p || !p.active) {
                     continue;
@@ -286,7 +284,7 @@ function tick(event) {
             }
         } //Pests for
 
-        for (b in Balls) {
+        for (let b in Balls) {
             o = Balls[b];
             if (!o || !o.active) {
                 continue;
@@ -334,7 +332,7 @@ function tick(event) {
                 brickCollision = 0;
 
                 xResult = yResult = 0;
-                for (msn in Masonry) {
+                for (let msn in Masonry) {
                     m = Masonry[msn];
                     if (!m || !m.active) {
                         continue;
@@ -349,7 +347,7 @@ function tick(event) {
                 }
 
                 if (brickCollision === 0) {
-                    for (msn in Masonry) {
+                    for (let msn in Masonry) {
                         m = Masonry[msn];
                         if (!m || !m.active) {
                             continue;
@@ -369,7 +367,7 @@ function tick(event) {
                     }
                 }
 
-                for (msn in Masonry) {
+                for (let msn in Masonry) {
                     m = Masonry[msn];
                     if (!m || !m.touching) {
                         continue;
@@ -544,7 +542,7 @@ function tick(event) {
             }
         } //Balls for
 
-        for (var i = 0; i < Balls.length; i++) {
+        for (let i = 0; i < Balls.length; i++) {
             if (Balls[i].active === false) {
                 Balls.splice(i, 1);
                 i--;
@@ -563,7 +561,7 @@ function tick(event) {
         }
 
         //handle pests (nested in one loop to prevent excess loops)
-        for (var pst in Pests) {
+        for (let pst in Pests) {
             o = Pests[pst];
             if (!o || !o.active) {
                 continue;
@@ -590,7 +588,7 @@ function tick(event) {
 
             if (o || o.active) {
 
-                for (b in Balls) {
+                for (let b in Balls) {
                     var p = Balls[b];
                     if (!p || !p.active) {
                         continue;
@@ -630,7 +628,7 @@ function tick(event) {
             }
         }
 
-        for (i = 0; i < Pests.length; i++) {
+        for (let i = 0; i < Pests.length; i++) {
             if (Pests[i].active === false) {
                 Pests.splice(i, 1);
                 i--;
@@ -638,14 +636,14 @@ function tick(event) {
         }
         pestCount = Pests.length;
 
-        for (i = 0; i < Bullets.length; i++) {
+        for (let i = 0; i < Bullets.length; i++) {
             if (Bullets[i].active === false) {
                 Bullets.splice(i, 1);
                 i--;
             }
         }
 
-        for (b in blastWaves) {
+        for (let b in blastWaves) {
             o = blastWaves[b];
             if (!o || !o.active) {
                 continue;
@@ -653,7 +651,7 @@ function tick(event) {
             o.tick(event);
         }
 
-        for (var bns in Bonuses) {
+        for (let bns in Bonuses) {
             o = Bonuses[bns];
             if (!o || !o.active) {
                 continue;
@@ -759,7 +757,7 @@ function tick(event) {
             o.tick(event);
         }
 
-        for (i = 0; i < Bonuses.length; i++) {
+        for (let i = 0; i < Bonuses.length; i++) {
             if (Bonuses[i].active === false) {
                 Bonuses.splice(i, 1);
                 i--;
@@ -874,7 +872,7 @@ function mix(color_1, color_2, weight) {
     var color = "#";
     color_1 = String(color_1).replace("#", "");
     color_2 = String(color_2).replace("#", "");
-    for (var i = 0; i <= 5; i += 2) { // loop through each of the 3 hex pairs—red, green, and blue
+    for (let i = 0; i <= 5; i += 2) { // loop through each of the 3 hex pairs—red, green, and blue
         var v1 = h2d(color_1.substr(i, 2)), // extract the current pairs
                 v2 = h2d(color_2.substr(i, 2)),
                 // combine the current pairs from each source color, according to the specified weight
@@ -1023,7 +1021,7 @@ function stopLevelAnimation(type) {
 
 function blast(i) {
     var arr = [i - 12, i - 11, i - 10, i - 1, i + 1, i + 10, i + 11, i + 12];
-    for (var j = 0; j < 8; j++) {
+    for (let j = 0; j < 8; j++) {
         var m = Masonry[arr[j]];
         if (m && m.active) {
             switch (m.type) {
@@ -1060,7 +1058,7 @@ function blast(i) {
 }
 
 function launch() {
-    for (b in Balls) {
+    for (let b in Balls) {
         var p = Balls[b];
         p.launched = true;
     }
@@ -1068,19 +1066,19 @@ function launch() {
 
 function teleportIn() {
     function indexOf() {
-        for (var i = 0; i < Masonry.length; i++) {
+        for (let i = 0; i < Masonry.length; i++) {
             if (Masonry[i] && Masonry[i].type === "j" && Masonry[i].touching === true)
                 return i;
         }
         return -1;
     }
-    var i = indexOf();
+    var j = indexOf();
     var r;
-    if (i !== -1) {
-        Masonry[i].touching = false;
+    if (j !== -1) {
+        Masonry[j].touching = false;
         do {
             r = randomInteger(0, Teleports.length - 1);
-        } while (i === Teleports[r]);
+        } while (j === Teleports[r]);
         return Teleports[r];
     } else
         return -1;
@@ -1088,19 +1086,19 @@ function teleportIn() {
 
 function disruption() {
     function indexOf() {
-        for (var i = 0; i < Masonry.length; i++) {
+        for (let i = 0; i < Masonry.length; i++) {
             if (Masonry[i] && Masonry[i].type === "i" && Masonry[i].touching === true && Masonry[i].active ===
                     true)
                 return i;
         }
         return -1;
     }
-    var i = indexOf();
-    if (i !== -1) {
-        Masonry[i].active = false;
-        Masonry[i].touching = false;
-        startblastWave(Masonry[i].x, Masonry[i].y);
-        blast(i);
+    var j = indexOf();
+    if (j !== -1) {
+        Masonry[j].active = false;
+        Masonry[j].touching = false;
+        startblastWave(Masonry[j].x, Masonry[j].y);
+        blast(j);
     }
 }
 
@@ -1217,9 +1215,9 @@ function startLevel(num) { /****************************************************
     stage.clear();
     stage.removeAllChildren();
 
-    for (var y = 0; y < 11; y++) {
+    for (let y = 0; y < 11; y++) {
         cx = 1;
-        for (var x = 0; x < 11; x++) {
+        for (let x = 0; x < 11; x++) {
             subStr = Levels[num].substring(strIndex, strIndex + 3);
             t = subStr.substring(0, 1);
             s = subStr.substring(1, 2);
@@ -1242,7 +1240,7 @@ function startLevel(num) { /****************************************************
         cy += bH + 1;
     }
     //вначале всё активируем, для отрисовки и формирования массива, потом снимаем активацию с невидимых блоков (тип "а") 
-    for (y = 0; y < 121; y++) {
+    for (let y = 0; y < 121; y++) {
         if (Masonry[y].type === "a")
             Masonry[y].active = false;
     }
