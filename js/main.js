@@ -53,6 +53,7 @@ var currentLevel;
 var lives; //количество "жизней"
 var score; //текущий счет
 var scoreThreshold;
+var lTargetX, lTargetY; //цель молнии
 const dColor = "#ff68f9"; //цвет шара по умолчанию
 
 var Platform; //Платформа (platformObject)
@@ -167,7 +168,6 @@ function tick(event) {
                     stage.alpha = aNumber / 100;
                     stage.update();
                 }
-                return;
                 break;
             case "p_born":
                 aNumber++;
@@ -180,7 +180,13 @@ function tick(event) {
                         Platform.x--;
                 }
                 break;
+            case "thunderbolt":
+                aNumber++;
+                if (aNumber > 25) {
+                    stopLevelAnimation(levelAnimationType);
+                }
         }
+        return;
     }
 
     if (lives > 0 && mCount > 0 && !event.paused) {
@@ -480,9 +486,17 @@ function tick(event) {
                 if (o.ballPlatformCollision(Platform.x, Platform.y, Platform.width, 15)) {
                     //createjs.Ticker.paused = true;
                     iAmFed++;
-                    if (iAmFed >= 20 && mCount === 1) {
-                        currentLevel++;
-                        startLevel(currentLevel);
+                    if (iAmFed >= 15 && mCount === 1) {
+                        for (let msn in Masonry) {
+                            m = Masonry[msn];
+                            if (!m || !m.active) {
+                                continue;
+                            }
+                            lTargetX = m.x + (bW / 2) - 12;
+                            lTargetY = m.y + bH;
+                            stage.removeChild(m);
+                        }
+                        startLevelAnimation("thunderbolt");
                     }
                     switch (Platform.bonus) {
                         case "magnet":
@@ -785,7 +799,7 @@ function tick(event) {
                             Platform.gradient.linearGradient(pBonusColor, [0.5, 0.5], 0, 0, Platform.width, 15);
                         } else {
                             Platform.gradient.linearGradient(pDefaultColor, [0.5, 0.5], 0, 0, Platform.width,
-                                    15);
+                                15);
                         }
                         break;
                 }
@@ -874,9 +888,9 @@ function mix(color_1, color_2, weight) {
     color_2 = String(color_2).replace("#", "");
     for (let i = 0; i <= 5; i += 2) { // loop through each of the 3 hex pairs—red, green, and blue
         var v1 = h2d(color_1.substr(i, 2)), // extract the current pairs
-                v2 = h2d(color_2.substr(i, 2)),
-                // combine the current pairs from each source color, according to the specified weight
-                val = d2h(Math.floor(v2 + (v1 - v2) * (weight / 100.0)));
+            v2 = h2d(color_2.substr(i, 2)),
+            // combine the current pairs from each source color, according to the specified weight
+            val = d2h(Math.floor(v2 + (v1 - v2) * (weight / 100.0)));
         while (val.length < 2) {
             val = '0' + val;
         } // prepend a '0' if val results in a single digit
@@ -885,6 +899,76 @@ function mix(color_1, color_2, weight) {
     }
 
     return color; // PROFIT!
+}
+
+function thunderbolt() {
+
+    function lightning(gameTime, start, end) {
+        var seed;
+
+        function random() {
+            var x = Math.sin(seed += 1000) * 10000;
+            return x - Math.floor(x);
+        }
+
+        gameTime = Math.round(gameTime / 25);
+        var variance = (Math.max(Math.abs(start[0] - end[0]), Math.abs(start[1] - end[1])));
+        var points = [start];
+        var pointCount = variance / 10;
+        seed = gameTime;
+        for (let i = 0; i < pointCount + 1; i++) {
+            let nextPoint = [
+                start[0] + (end[0] - start[0]) * (i / pointCount),
+                start[1] + (end[1] - start[1]) * (i / pointCount),
+            ];
+            nextPoint[0] += random() * Math.sqrt(variance);
+            nextPoint[1] += random() * Math.sqrt(variance);
+            points.push(nextPoint);
+        }
+        return points;
+    }
+
+    function drawLightning(points, final, aura, a) {
+        var s = new createjs.Shape();
+        var g = s.graphics;
+
+        g.setStrokeStyle(14).beginStroke("rgba(39, 0, 255, 0.1)");
+        g.moveTo(points[0], points[1]);
+        points.forEach(point => g.lineTo(point[0], point[1]));
+
+        if (aura) {
+            g.setStrokeStyle(14).beginStroke("rgba(39, 0, 255, 0.3)");
+            points.forEach(point => g.lineTo(point[0], point[1]));
+            return;
+        }
+
+        g.setStrokeStyle(7).beginStroke("rgba(158,0,255,0.2)");
+        points.forEach(point => g.lineTo(point[0], point[1]));
+        g.setStrokeStyle(4);
+        points.forEach(point => g.lineTo(point[0], point[1]));
+        g.setStrokeStyle(2.5).beginStroke("rgba(255,255,255,.5)");
+        points.forEach(point => g.lineTo(point[0], point[1]));
+        if (final !== false) {
+            g.setStrokeStyle(0.5).beginStroke("#fff");
+            points.forEach(point => g.lineTo(point[0], point[1]));
+        }
+        g.closeStroke;
+        s.alpha = a;
+        stage.addChild(s);
+        stage.update;
+    }
+
+    var srcPoint = [Platform.x + Math.round(Platform.width / 2), Platform.y - 25];
+    var destPoint = [lTargetX, lTargetY];
+
+    // base hue
+    var path = lightning(Date.now(), srcPoint, destPoint);
+    drawLightning(lightning(Date.now(), srcPoint, destPoint), true, true, 1);
+    // ghosts
+    drawLightning(lightning(Date.now() - 25, srcPoint, destPoint), true, false, 0.25);
+    drawLightning(lightning(Date.now() + 25, srcPoint, destPoint), true, false, 0.25);
+    // main lightning
+    drawLightning(path, true, false, 1);
 }
 
 function handleKeyDown(e) {
@@ -975,46 +1059,49 @@ function handleKeyUp(e) {
 }
 
 function startLevelAnimation(type) {
+    LevelAnimation = true;
+    aNumber = 0;
     switch (type) {
         case "startLevel":
-            aNumber = 0;
-            LevelAnimation = true;
             levelAnimationType = "startLevel";
             stage.alpha = 0;
             break;
         case "p_born":
-            LevelAnimation = true;
             platformSetBonus("none");
             platformNoMove = true;
             levelAnimationType = "p_born";
-            aNumber = 0;
             platformResize(0);
             Platform.width = 0;
             Platform.x = stage.canvas.width / 2;
             stage.update();
             break;
+        case "thunderbolt":
+            platformNoMove = true;
+            levelAnimationType = "thunderbolt";
+            thunderbolt();
     }
 }
 
 function stopLevelAnimation(type) {
+    LevelAnimation = false;
+    levelAnimationType = "";
     switch (type) {
         case "startLevel":
             aNumber = 100;
-            LevelAnimation = false;
-            levelAnimationType = "";
             stage.width = 1;
             Platform.alpha = 1;
             platformNoMove = false;
             break;
         case "p_born":
-            LevelAnimation = false;
-            levelAnimationType = "";
             aNumber = pDefaultWidth;
             platformResize(pDefaultWidth);
             Platform.width = pDefaultWidth;
             startBall(Platform.x, Platform.y, false);
             platformNoMove = false;
             break;
+        case "thunderbolt":
+            currentLevel++;
+            startLevel(currentLevel);
     }
 
 }
@@ -1088,7 +1175,7 @@ function disruption() {
     function indexOf() {
         for (let i = 0; i < Masonry.length; i++) {
             if (Masonry[i] && Masonry[i].type === "i" && Masonry[i].touching === true && Masonry[i].active ===
-                    true)
+                true)
                 return i;
         }
         return -1;

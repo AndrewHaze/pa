@@ -8,7 +8,7 @@
     var p = createjs.extend(platformObject, createjs.Shape);
 
 
-// public properties:
+// public properties: 
 
     p.width;	//visual radial size
     p.bonus;  //текущий бонус платформы

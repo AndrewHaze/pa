@@ -6,7 +6,7 @@
     }
 
     var p = createjs.extend(Bonus, createjs.Container);
-    var r = 12 //бонус радиус;
+    var r = 12 //Р±РѕРЅСѓСЃ СЂР°РґРёСѓСЃ;
 
     // public properties:
 

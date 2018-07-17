@@ -33,37 +33,37 @@
                 this.d_color = "transparent";
                 this.color = this.graphics.beginFill(this.d_color).command;
                 break;
-            case "b": //Красный
+            case "b": //РљСЂР°СЃРЅС‹Р№
                 this.d_color = "#ff1919";
                 this.m_color = "#7f0000";
                 c = mix(this.m_color, this.d_color, 25 * (s - 1));
                 this.color = this.graphics.beginFill(c).command;
                 break;
-            case "c": //Голубой
+            case "c": //Р“РѕР»СѓР±РѕР№ 
                 this.d_color = "#1ffff9";
                 this.m_color = "#1C1B17";
                 c = mix(this.m_color, this.d_color, 25 * (s - 1));
                 this.color = this.graphics.beginFill(c).command;
                 break;
-            case "d": //Малиновый
+            case "d": //РњР°Р»РёРЅРѕРІС‹Р№
                 this.d_color = "#f339ff";
                 this.m_color = "#1C1B17";
                 c = mix(this.m_color, this.d_color, 25 * (s - 1));
                 this.color = this.graphics.beginFill(c).command;
                 break;
-            case "e": //Зеленый
+            case "e": //Р—РµР»РµРЅС‹Р№
                 this.d_color = "#2aff2d";
                 this.m_color = "#1C1B17";
                 c = mix(this.m_color, this.d_color, 25 * (s - 1));
                 this.color = this.graphics.beginFill(c).command;
                 break;
-            case "f": //Желтый
+            case "f": //Р–РµР»С‚С‹Р№
                 this.d_color = "#fed700";
                 this.m_color = "#ff0000";
                 c = mix(this.m_color, this.d_color, 25 * (s - 1));
                 this.color = this.graphics.beginFill(c).command;
                 break;
-            case "g": //Синий
+            case "g": //РЎРёРЅРёР№
                 this.d_color = "#1919ff";
                 this.m_color = "#1C1B17";
                 c = mix(this.m_color, this.d_color, 25 * (s - 1));
