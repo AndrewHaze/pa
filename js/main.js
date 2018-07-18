@@ -49,12 +49,13 @@ var oldX, oldY;
 var xResult;
 var yResult;
 var brickCollision;
+const dColor = "#ff68f9"; //цвет шара по умолчанию
+
 var currentLevel;
 var lives; //количество "жизней"
 var score; //текущий счет
 var scoreThreshold;
 var lTargetX, lTargetY; //цель молнии
-const dColor = "#ff68f9"; //цвет шара по умолчанию
 
 var Platform; //Платформа (platformObject)
 var pBonusColor = [];
@@ -158,9 +159,9 @@ function tick(event) {
     var choice;
 
     if (LevelAnimation) {
+        aNumber++;
         switch (levelAnimationType) {
             case "startLevel":
-                aNumber++;
                 if (aNumber > 100) {
                     stopLevelAnimation(levelAnimationType);
                     startLevelAnimation("p_born");
@@ -170,7 +171,6 @@ function tick(event) {
                 }
                 break;
             case "p_born":
-                aNumber++;
                 if (aNumber > 100) {
                     stopLevelAnimation(levelAnimationType);
                 } else {
@@ -181,7 +181,6 @@ function tick(event) {
                 }
                 break;
             case "thunderbolt":
-                aNumber++;
                 if (aNumber > 25) {
                     stopLevelAnimation(levelAnimationType);
                 }
