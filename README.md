@@ -1,2 +1,2 @@
 # Project-A
-Arkanoid (Powered by ECMAScript 2015 + EaselJS)
+Arkanoid like game (Powered by ECMAScript 2015 + EaselJS)
