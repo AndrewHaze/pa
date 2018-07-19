@@ -21,6 +21,8 @@ var mCount; //количество разбиваемых в игре
 var bSkip; //анимация неразб. блока
 var bW = 49; //ширина блока
 var bH = 25; //высота блока
+const amountH = 11;
+const amountV = 22;
 
 var blastWaves;
 
@@ -1263,6 +1265,7 @@ function startLevel(num) { /****************************************************
     var o;
     var subStr;
     var strIndex = 0;
+    const numberOfBricks = 11 * 22;
 
     startLevelAnimation("startLevel");
 
@@ -1301,9 +1304,9 @@ function startLevel(num) { /****************************************************
     stage.clear();
     stage.removeAllChildren();
 
-    for (let y = 0; y < 11; y++) {
+    for (let y = 0; y < amountV; y++) {
         cx = 1;
-        for (let x = 0; x < 11; x++) {
+        for (let x = 0; x < amountH; x++) {
             subStr = Levels[num].substring(strIndex, strIndex + 3);
             t = subStr.substring(0, 1);
             s = subStr.substring(1, 2);
@@ -1326,7 +1329,7 @@ function startLevel(num) { /****************************************************
         cy += bH + 1;
     }
     //вначале всё активируем, для отрисовки и формирования массива, потом снимаем активацию с невидимых блоков (тип "а") 
-    for (let y = 0; y < 121; y++) {
+    for (let y = 0; y < numberOfBricks; y++) {
         if (Masonry[y].type === "a")
             Masonry[y].active = false;
     }
