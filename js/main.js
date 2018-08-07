@@ -943,11 +943,11 @@ function thunderbolt() {
             return;
         }
 
-        g.setStrokeStyle(7).beginStroke("rgba(158,0,255,0.2)");
+        g.setStrokeStyle(5).beginStroke("rgba(158,0,255,0.2)");
         points.forEach(point => g.lineTo(point[0], point[1]));
-        g.setStrokeStyle(4);
+        g.setStrokeStyle(3);
         points.forEach(point => g.lineTo(point[0], point[1]));
-        g.setStrokeStyle(2.5).beginStroke("rgba(255,255,255,.5)");
+        g.setStrokeStyle(1.5).beginStroke("rgba(255,255,255,.5)");
         points.forEach(point => g.lineTo(point[0], point[1]));
         if (final !== false) {
             g.setStrokeStyle(0.5).beginStroke("#fff");
