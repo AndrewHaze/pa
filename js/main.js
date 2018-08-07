@@ -366,10 +366,12 @@ function tick(event) {
                             m.touching = true;
                             if (isPointToRect(o.x, o.y, o.radius, m.x, m.y, bW, bH) && m.type === "h") {
                                 break;
-                            }
+                            } else {
+                                iAmFed = 0;
+                            }    
                             o.wallBlows = 0;
                             brickCollision++;
-                            iAmFed = 0;
+                            
                         }
                     }
                 }
