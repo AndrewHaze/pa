@@ -366,9 +366,10 @@ function tick(event) {
                             m.touching = true;
                             if (isPointToRect(o.x, o.y, o.radius, m.x, m.y, bW, bH) && m.type === "h") {
                                 break;
-                            } else {
+                            } 
+							if (m.type !== "h")
                                 iAmFed = 0;
-                            }    
+                               
                             o.wallBlows = 0;
                             brickCollision++;
                             
@@ -492,7 +493,7 @@ function tick(event) {
                     if (iAmFed >= 15 && mCount === 1) {
                         for (let msn in Masonry) {
                             m = Masonry[msn];
-                            if (!m || !m.active) {
+                            if (!m || !m.active || m.type === "h") {
                                 continue;
                             }
                             lTargetX = m.x + (bW / 2) - 12;
