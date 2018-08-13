@@ -79,10 +79,6 @@ function platformSetBonus(bonus) {                                              
             pCurrentColor = pBonusColor;
             rof = 18;
             break;
-        case "death":
-            lives--;
-            document.getElementById('lives').innerHTML = lives;
-            break;
         case "reduce":
             if (Platform.width > 40) {
                 Platform.width -= 20;

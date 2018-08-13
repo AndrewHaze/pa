@@ -739,7 +739,9 @@ function tick(event) {
                         break;
                     case "death":
                         scoreUp(100);
-                        platformSetBonus("death");
+                        startLevelAnimation("p_born");
+                        lives--;
+                        document.getElementById('lives').innerHTML = lives;
                         break
                     case "anew":
                         scoreUp(1);
@@ -1314,6 +1316,7 @@ function startLevel(num) { /****************************************************
     createjs.Ticker.paused = true;
     stage.clear();
     stage.removeAllChildren();
+    document.getElementById('gameCanvas').style.borderBottomColor = "#f7f9fb";
 
     for (let y = 0; y < amountV; y++) {
         cx = 1;
