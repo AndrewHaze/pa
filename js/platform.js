@@ -11,7 +11,7 @@
 // public properties: 
 
     p.width;	//visual radial size
-    p.bonus;  //текущий бонус платформы
+    p.bonus;  //Р±РѕРЅСѓСЃ РїР»Р°С‚С„РѕСЂРјС‹
     p.bonusTime;
     p.gradient;
 
