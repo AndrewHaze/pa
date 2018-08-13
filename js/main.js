@@ -146,6 +146,8 @@ function init() {
     Img.anew.src = "image/anew.png";
     Img.invisibility = new Image();
     Img.invisibility.src = "image/invisibility.png";
+    Img.yy = new Image();
+    Img.yy.src = "image/yy.png";
     Img.random_m = new Image();
     Img.random_m.src = "image/random-.png";
 
@@ -366,13 +368,13 @@ function tick(event) {
                             m.touching = true;
                             if (isPointToRect(o.x, o.y, o.radius, m.x, m.y, bW, bH) && m.type === "h") {
                                 break;
-                            } 
-							if (m.type !== "h")
+                            }
+                            if (m.type !== "h")
                                 iAmFed = 0;
-                               
+
                             o.wallBlows = 0;
                             brickCollision++;
-                            
+
                         }
                     }
                 }
@@ -677,12 +679,15 @@ function tick(event) {
             if (o.platformBonusCollision(Platform.x, Platform.y, Platform.width)) {
                 var bonusList = ["live", "slow", "magnet", "ack", "triple", "ram", "absent", "next", "enlarge",
                     "floor", "", "", "random_p", "death", "quick", "shield", "pest", "reduce", "nobonus",
-                    "anew", "invisibility", "", "", "", "", "random_m"
+                    "anew", "invisibility", "", "", "", "yy", "random_m"
                 ];
+                let setOfNumber = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15, 16, 17, 18, 19, 20];
                 if (o.gift === "random_p")
                     o.gift = bonusList[randomInteger(0, 9)];
                 else if (o.gift === "random_m")
                     o.gift = bonusList[randomInteger(13, 20)];
+                else if (o.gift === "yy")
+                    o.gift = bonusList[setOfNumber[randomInteger(0, 18)]];
                 switch (o.gift) {
                     case "live":
                         scoreUp(1);
@@ -1253,6 +1258,9 @@ function spotBonus(x, y, code) {
             break;
         case "u":
             getBonus(bn_xShift, bn_yShift, "invisibility");
+            break;
+        case "y":
+            getBonus(bn_xShift, bn_yShift, "yy");
             break;
         case "z":
             getBonus(bn_xShift, bn_yShift, "random_m");
