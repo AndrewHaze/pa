@@ -511,6 +511,8 @@ function tick(event) {
                             o.y = Platform.y - o.radius;
                             o.vX = 0;
                             o.vY = -5;
+                            let now = new Date();
+                            o.parkingTime = now.getTime();
                             break;
                         case "none":
                             o.ballPlatformOffset = Math.round(Platform.width / 2);
@@ -537,6 +539,8 @@ function tick(event) {
                 }
                 o.x = Platform.x + o.ballPlatformOffset;
                 o.y = Platform.y - o.radius;
+                let now = new Date();
+                if ((now.getTime() - o.parkingTime) > 5000) o.launched = true;
             }
             if (o.bonus !== "none") {
                 if (o.bonusTime > 0) {

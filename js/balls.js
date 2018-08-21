@@ -11,6 +11,7 @@
     p.radius; //visual radial size
     p.bonus;
     p.bonusTime;
+    p.parkingTime;
     p.size; //size value itself
 
 
@@ -181,6 +182,7 @@ function getBall() {
 function startBall(x, y, b) {
     //create the bullet
     var o = Balls[getBall()];
+    var now = new Date();
     o.ballPlatformOffset = Math.round(Platform.width / 2);
     o.x = x + o.ballPlatformOffset;
     o.y = y - o.radius;
@@ -199,6 +201,7 @@ function startBall(x, y, b) {
     } else {
         o.vX = 0;
         o.vY = -5;
+        o.parkingTime = now.getTime();
     }
 }
 
